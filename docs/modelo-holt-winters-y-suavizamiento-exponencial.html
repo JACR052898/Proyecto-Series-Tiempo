@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Capítulo 1 SERIE DE TIEMPO | Series-de-tiempo.knit</title>
+  <title>Capítulo 5 Modelo Holt-Winters y suavizamiento exponencial | Series-de-tiempo.knit</title>
   <meta name="description" content="" />
   <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Capítulo 1 SERIE DE TIEMPO | Series-de-tiempo.knit" />
+  <meta property="og:title" content="Capítulo 5 Modelo Holt-Winters y suavizamiento exponencial | Series-de-tiempo.knit" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Capítulo 1 SERIE DE TIEMPO | Series-de-tiempo.knit" />
+  <meta name="twitter:title" content="Capítulo 5 Modelo Holt-Winters y suavizamiento exponencial | Series-de-tiempo.knit" />
   
   
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="descomposición-de-la-serie-de-tiempo.html"/>
 
-<link rel="next" href="carga-y-descripción-de-los-datos.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -194,18 +194,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<!--bookdown:title:end-->
-<!--bookdown:title:start-->
-<div id="serie-de-tiempo" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number">Capítulo 1</span> SERIE DE TIEMPO<a href="serie-de-tiempo.html#serie-de-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>La propuesta se enfocará en el análisis de la serie de tiempo de la variacion anual del Índice de Precios al Consumidor (IPC) en Colombia, suministrada por el DANE, la cual contiene datos desde el 1 de julio de 1955 hasta el 1 de octubre de 2024 con una frecuencia mensual. El IPC es un indicador clave para medir la variación de los precios de una canasta de bienes y servicios en el tiempo, y es fundamental para el análisis económico, la toma de decisiones políticas y la planificación financiera empresarial o personal.</p>
-<div id="referencia" class="section level2 hasAnchor" number="1.1">
-<h2><span class="header-section-number">1.1</span> <strong>Referencia</strong><a href="serie-de-tiempo.html#referencia" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>DANE - <a href="https://sitios.dane.gov.co/ipc/visorIPC/#!/" class="uri">https://sitios.dane.gov.co/ipc/visorIPC/#!/</a></p>
-</div>
-<div id="herramientas-utilizadas" class="section level2 hasAnchor" number="1.2">
-<h2><span class="header-section-number">1.2</span> <strong>Herramientas utilizadas</strong><a href="serie-de-tiempo.html#herramientas-utilizadas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Para la publicación del libro Bookdown, se utiliza R-Studio como software editor e intermediario entre el repositorio creado en GitHub que a su vez permite la publicación del libro mediante un enlace web.</p>
+<div id="modelo-holt-winters-y-suavizamiento-exponencial" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Capítulo 5</span> <strong>Modelo Holt-Winters y suavizamiento exponencial</strong><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#modelo-holt-winters-y-suavizamiento-exponencial" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="holt-winters" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> <strong>Holt Winters</strong><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#holt-winters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb24-1" tabindex="-1"></a><span class="co"># Aplicar el método de Holt-Winters con estacionalidad aditiva</span></span>
+<span id="cb24-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb24-2" tabindex="-1"></a>modelo_hw <span class="ot">&lt;-</span> <span class="fu">HoltWinters</span>(Indice_ts, <span class="at">seasonal =</span> <span class="st">&quot;additive&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb25-1" tabindex="-1"></a><span class="co"># Visualizar el ajuste del modelo</span></span>
+<span id="cb25-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb25-2" tabindex="-1"></a><span class="fu">plot</span>(modelo_hw, <span class="at">main =</span> <span class="st">&quot;Ajuste del Modelo Holt-Winters para IPC&quot;</span>)</span></code></pre></div>
+<p><img src="Series-de-tiempo_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb26-1" tabindex="-1"></a><span class="co"># Hacer una predicción a futuro (por ejemplo, para los próximos 12 meses)</span></span>
+<span id="cb26-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb26-2" tabindex="-1"></a>prediccion_hw <span class="ot">&lt;-</span> forecast<span class="sc">::</span><span class="fu">forecast</span>(modelo_hw, <span class="at">h =</span> <span class="dv">12</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb27-1" tabindex="-1"></a><span class="co"># Visualizar la predicción</span></span>
+<span id="cb27-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb27-2" tabindex="-1"></a><span class="fu">plot</span>(prediccion_hw, <span class="at">main =</span> <span class="st">&quot;Predicción de Holt-Winters para IPC&quot;</span>,<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2015</span>,<span class="dv">2025</span>))</span></code></pre></div>
+<p><img src="Series-de-tiempo_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb28-1" tabindex="-1"></a><span class="co"># Mostrar la predicción en consola</span></span>
+<span id="cb28-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb28-2" tabindex="-1"></a><span class="fu">print</span>(prediccion_hw)</span></code></pre></div>
+<pre><code>##          Point Forecast        Lo 80      Hi 80         Lo 95      Hi 95
+## Mar 2024   0.0596272209  0.044718323 0.07453612  3.682603e-02 0.08242841
+## Apr 2024   0.0565752463  0.032308344 0.08084215  1.946222e-02 0.09368827
+## May 2024   0.0523199834  0.018120176 0.08651979  1.589216e-05 0.10462407
+## Jun 2024   0.0465042847  0.001631737 0.09137683 -2.212236e-02 0.11513092
+## Jul 2024   0.0387576362 -0.017542243 0.09505752 -4.734560e-02 0.12486087
+## Aug 2024   0.0289763373 -0.039485745 0.09743842 -7.572738e-02 0.13368006
+## Sep 2024   0.0189350281 -0.062395928 0.10026598 -1.054499e-01 0.14331999
+## Oct 2024   0.0105207440 -0.084356633 0.10539812 -1.345817e-01 0.15562317
+## Nov 2024   0.0044176226 -0.104656074 0.11349132 -1.623962e-01 0.17123145
+## Dec 2024   0.0001412276 -0.123753186 0.12403564 -1.893389e-01 0.18962138
+## Jan 2025  -0.0028946175 -0.142210867 0.13642163 -2.159604e-01 0.21017120
+## Feb 2025  -0.0048360912 -0.160154101 0.15048192 -2.423745e-01 0.23270231</code></pre>
 
 </div>
 </div>
@@ -214,8 +231,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
+<a href="descomposición-de-la-serie-de-tiempo.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="carga-y-descripción-de-los-datos.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -246,7 +263,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/Proyecto-Series-Tiempo/edit/master/docs/Intro.Rmd",
+"link": "https://github.com/rstudio/Proyecto-Series-Tiempo/edit/master/docs/04-capitulo-4.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -254,7 +271,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/JACR052898/Proyecto-Series-Tiempo/blob/master/docs/Intro.Rmd",
+"link": "https://github.com/JACR052898/Proyecto-Series-Tiempo/blob/master/docs/04-capitulo-4.Rmd",
 "text": null
 },
 "download": null,

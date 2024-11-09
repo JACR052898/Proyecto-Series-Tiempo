@@ -1,0 +1,35 @@
+# **Modelo Holt-Winters y suavizamiento exponencial**
+
+## **Holt Winters**
+
+```{r}
+# Aplicar el método de Holt-Winters con estacionalidad aditiva
+modelo_hw <- HoltWinters(Indice_ts, seasonal = "additive")
+```
+
+```{r}
+# Visualizar el ajuste del modelo
+plot(modelo_hw, main = "Ajuste del Modelo Holt-Winters para IPC")
+```
+
+```{r}
+# Hacer una predicción a futuro (por ejemplo, para los próximos 12 meses)
+prediccion_hw <- forecast::forecast(modelo_hw, h = 12)
+```
+
+```{r}
+# Visualizar la predicción
+plot(prediccion_hw, main = "Predicción de Holt-Winters para IPC",xlim = c(2015,2025))
+
+# Mostrar la predicción en consola
+print(prediccion_hw)
+
+```
+
+
+
+
+
+
+
+

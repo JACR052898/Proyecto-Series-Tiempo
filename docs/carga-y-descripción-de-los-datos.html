@@ -170,6 +170,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.1" data-path="descomposición-de-la-serie-de-tiempo.html"><a href="descomposición-de-la-serie-de-tiempo.html#resultado-prueba-de-estacionariedad"><i class="fa fa-check"></i><b>4.2.1</b> <strong>Resultado prueba de estacionariedad</strong></a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="5" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html"><i class="fa fa-check"></i><b>5</b> <strong>Modelo Holt-Winters y suavizamiento exponencial</strong></a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#holt-winters"><i class="fa fa-check"></i><b>5.1</b> <strong>Holt Winters</strong></a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -205,13 +209,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="carga-y-descripción-de-los-datos.html#cb3-1" tabindex="-1"></a><span class="fu">glimpse</span>(data)</span></code></pre></div>
 <pre><code>## Rows: 999
 ## Columns: 7
-## $ Mes        &lt;chr&gt; &quot;7/1/1955&quot;, &quot;8/1/1955&quot;, &quot;9/1/1955&quot;, &quot;10/1/1955&quot;, &quot;11/1/1955&quot;, &quot;12/1/1955&quot;, &quot;1/1/1956&quot;, &quot;2/1/1956&quot;, &quot;3/1/19…
-## $ IPC        &lt;chr&gt; &quot;-0.87%&quot;, &quot;-0.01%&quot;, &quot;0.84%&quot;, &quot;0.77%&quot;, &quot;1.44%&quot;, &quot;2.03%&quot;, &quot;2.10%&quot;, &quot;2.57%&quot;, &quot;3.10%&quot;, &quot;3.04%&quot;, &quot;4.25%&quot;, &quot;5.28…
-## $ DTF        &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;…
-## $ usura.E.A. &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;…
-## $ usura.M.V. &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;…
-## $ usura.DTF  &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;…
-## $ usura.IPC  &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;…</code></pre>
+## $ Mes        &lt;chr&gt; &quot;7/1/1955&quot;, &quot;8/1/1955&quot;, &quot;9/1/1955&quot;, &quot;10/1/1955&quot;, &quot;11/1/1955&quot;, &quot;12/1/1955&quot;, &quot;1/1/1956&quot;, &quot;2/1/…
+## $ IPC        &lt;chr&gt; &quot;-0.87%&quot;, &quot;-0.01%&quot;, &quot;0.84%&quot;, &quot;0.77%&quot;, &quot;1.44%&quot;, &quot;2.03%&quot;, &quot;2.10%&quot;, &quot;2.57%&quot;, &quot;3.10%&quot;, &quot;3.04%&quot;, …
+## $ DTF        &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
+## $ usura.E.A. &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
+## $ usura.M.V. &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
+## $ usura.DTF  &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
+## $ usura.IPC  &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …</code></pre>
 </div>
 <div id="descripción-de-la-base-de-datos" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> <strong>Descripción de la base de datos</strong><a href="carga-y-descripción-de-los-datos.html#descripción-de-la-base-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -368,7 +372,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/Series-de-tiempo/edit/master/docs/01-capitulo-1.Rmd",
+"link": "https://github.com/rstudio/Proyecto-Series-Tiempo/edit/master/docs/01-capitulo-1.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -376,7 +380,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/JACR052898/Series-de-tiempo/tree/Branch_1GC/blob/master/docs/01-capitulo-1.Rmd",
+"link": "https://github.com/JACR052898/Proyecto-Series-Tiempo/blob/master/docs/01-capitulo-1.Rmd",
 "text": null
 },
 "download": null,

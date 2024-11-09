@@ -12,3 +12,5 @@ descomposición-de-la-serie-de-tiempo
 descomposición
 estacionariedad
 resultado-prueba-de-estacionariedad
+modelo-holt-winters-y-suavizamiento-exponencial
+holt-winters
