@@ -36,7 +36,7 @@ En el peor de los casos, el IPC podría caer hasta -0.1, mientras que en el mejo
 
 La proyección central y los intervalos de confianza no muestran un aumento claro hacia valores positivos, lo que implica que no se espera un repunte inflacionario significativo en el corto plazo.
 
-## Suavizamiento exponencial simple
+## **Suavizamiento exponencial simple**
 
 ```{r}
 modelo_ses <- ses(Indice_ts, h = 12)  # 'h' es el horizonte de pronóstico (en este caso, 5 períodos)
