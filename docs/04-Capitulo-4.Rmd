@@ -9,7 +9,7 @@ modelo_hw <- HoltWinters(Indice_ts, seasonal = "additive")
 
 ```{r}
 # Visualizar el ajuste del modelo
-plot(modelo_hw, main = "Ajuste del Modelo Holt-Winters para IPC")
+g4<-plot(modelo_hw, main = "Ajuste del Modelo Holt-Winters para IPC")
 ```
 
 ```{r}
@@ -26,10 +26,35 @@ print(prediccion_hw)
 
 ```
 
+La línea de predicción central del IPC se mantiene alrededor de un valor constante cercano a 0 en el eje y, sugiriendo que el modelo no espera grandes variaciones en los precios a corto plazo.
 
+Hacia el final de la proyección, el IPC muestra una ligera inclinación hacia valores negativos, alrededor de -0.05, lo que podría interpretarse como una leve deflación o reducción en el nivel de precios en el futuro cercano.
 
+Los intervalos de confianza aumentan, desde aproximadamente ±0.02 al inicio de la predicción hasta ±0.1 hacia el final. Esto indica una mayor incertidumbre en la precisión del pronóstico en períodos más lejanos.
 
+En el peor de los casos, el IPC podría caer hasta -0.1, mientras que en el mejor escenario podría subir hasta +0.1, dando un rango de posible variación de 0.2 puntos en total, lo que indica posibles fluctuaciones en el entorno económico.
 
+La proyección central y los intervalos de confianza no muestran un aumento claro hacia valores positivos, lo que implica que no se espera un repunte inflacionario significativo en el corto plazo.
+
+## Suavizamiento exponencial simple
+
+```{r}
+modelo_ses <- ses(Indice_ts, h = 12)  # 'h' es el horizonte de pronóstico (en este caso, 5 períodos)
+```
+
+```{r}
+plot(modelo_ses,main = "Predicción modelo SES para IPC",xlim = c(2015,2025))
+summary(modelo_ses)
+```
+La predicción para el IPC muestra que los precios parecen estabilizarse, con valores cercanos a cero hacia finales de 2024 e inicios de 2025. Esto sugiere que el crecimiento en los precios podría frenarse, manteniendo la economía sin grandes cambios en el corto plazo.
+
+Los valores negativos pronosticados a partir de finales de 2024 indican una posible deflación o disminución en los precios. Esto podría influir en el consumo y en las decisiones de inversión, ya que una baja en los precios puede cambiar las expectativas económicas.
+
+Los intervalos de confianza relativamente estrechos en el horizonte cercano (2024) indican que el modelo tiene una buena certeza en sus predicciones a corto plazo, sugiriendo que no se esperan fluctuaciones significativas en el IPC en el próximo año.
+
+### Comparacion entre HW y SES
+
+El modelo Holt-Winters incluye valores negativos en la predicción para 2025, lo que sugiere una posible deflación o reducción en precios. En contraste, el modelo SES no muestra valores negativos y se mantiene en valores cercanos a cero, sugiriendo estabilidad sin deflación.
 
 
 

@@ -14,3 +14,5 @@ estacionariedad
 resultado-prueba-de-estacionariedad
 modelo-holt-winters-y-suavizamiento-exponencial
 holt-winters
+suavizamiento-exponencial-simple
+comparacion-entre-hw-y-ses
