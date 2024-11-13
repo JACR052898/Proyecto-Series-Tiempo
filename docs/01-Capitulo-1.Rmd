@@ -61,7 +61,7 @@ Posteriormente, se hace preprocesamiento de las variables, para poder convertir 
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 # Convertir la columna "Tiempo" a formato de fecha
-data$Tiempo <- as.Date(data$Tiempo, format = "%d/%m/%Y")
+data$Tiempo <- as.Date(data$Tiempo, format = "%m/%d/%Y")
 
 # Remover el símbolo de porcentaje y reemplazar comas por puntos
 data$IPC <- gsub("%", "", data$IPC)  # Eliminar '%'

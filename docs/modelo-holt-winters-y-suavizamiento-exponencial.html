@@ -173,7 +173,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html"><i class="fa fa-check"></i><b>5</b> <strong>Modelo Holt-Winters y suavizamiento exponencial</strong></a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#holt-winters"><i class="fa fa-check"></i><b>5.1</b> <strong>Holt Winters</strong></a></li>
-<li class="chapter" data-level="5.2" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#suavizamiento-exponencial-simple"><i class="fa fa-check"></i><b>5.2</b> Suavizamiento exponencial simple</a>
+<li class="chapter" data-level="5.2" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#suavizamiento-exponencial-simple"><i class="fa fa-check"></i><b>5.2</b> <strong>Suavizamiento exponencial simple</strong></a>
 <ul>
 <li class="chapter" data-level="5.2.1" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#comparacion-entre-hw-y-ses"><i class="fa fa-check"></i><b>5.2.1</b> Comparacion entre HW y SES</a></li>
 </ul></li>
@@ -202,31 +202,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Capítulo 5</span> <strong>Modelo Holt-Winters y suavizamiento exponencial</strong><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#modelo-holt-winters-y-suavizamiento-exponencial" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="holt-winters" class="section level2 hasAnchor" number="5.1">
 <h2><span class="header-section-number">5.1</span> <strong>Holt Winters</strong><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#holt-winters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb21-1" tabindex="-1"></a><span class="co"># Aplicar el método de Holt-Winters con estacionalidad aditiva</span></span>
-<span id="cb21-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb21-2" tabindex="-1"></a>modelo_hw <span class="ot">&lt;-</span> <span class="fu">HoltWinters</span>(Indice_ts, <span class="at">seasonal =</span> <span class="st">&quot;additive&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb22-1" tabindex="-1"></a><span class="co"># Visualizar el ajuste del modelo</span></span>
-<span id="cb22-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb22-2" tabindex="-1"></a>g4<span class="ot">&lt;-</span><span class="fu">plot</span>(modelo_hw, <span class="at">main =</span> <span class="st">&quot;Ajuste del Modelo Holt-Winters para IPC&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb24-1" tabindex="-1"></a><span class="co"># Aplicar el método de Holt-Winters con estacionalidad aditiva</span></span>
+<span id="cb24-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb24-2" tabindex="-1"></a>modelo_hw <span class="ot">&lt;-</span> <span class="fu">HoltWinters</span>(Indice_ts, <span class="at">seasonal =</span> <span class="st">&quot;additive&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb25-1" tabindex="-1"></a><span class="co"># Visualizar el ajuste del modelo</span></span>
+<span id="cb25-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb25-2" tabindex="-1"></a>g4<span class="ot">&lt;-</span><span class="fu">plot</span>(modelo_hw, <span class="at">main =</span> <span class="st">&quot;Ajuste del Modelo Holt-Winters para IPC&quot;</span>)</span></code></pre></div>
 <p><img src="Series-de-tiempo_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb23-1" tabindex="-1"></a><span class="co"># Hacer una predicción a futuro (por ejemplo, para los próximos 12 meses)</span></span>
-<span id="cb23-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb23-2" tabindex="-1"></a>prediccion_hw <span class="ot">&lt;-</span> forecast<span class="sc">::</span><span class="fu">forecast</span>(modelo_hw, <span class="at">h =</span> <span class="dv">12</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb24-1" tabindex="-1"></a><span class="co"># Visualizar la predicción</span></span>
-<span id="cb24-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb24-2" tabindex="-1"></a><span class="fu">plot</span>(prediccion_hw, <span class="at">main =</span> <span class="st">&quot;Predicción de Holt-Winters para IPC&quot;</span>,<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2015</span>,<span class="dv">2025</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb26-1" tabindex="-1"></a><span class="co"># Hacer una predicción a futuro (por ejemplo, para los próximos 12 meses)</span></span>
+<span id="cb26-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb26-2" tabindex="-1"></a>prediccion_hw <span class="ot">&lt;-</span> forecast<span class="sc">::</span><span class="fu">forecast</span>(modelo_hw, <span class="at">h =</span> <span class="dv">12</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb27-1" tabindex="-1"></a><span class="co"># Visualizar la predicción</span></span>
+<span id="cb27-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb27-2" tabindex="-1"></a><span class="fu">plot</span>(prediccion_hw, <span class="at">main =</span> <span class="st">&quot;Predicción de Holt-Winters para IPC&quot;</span>,<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2015</span>,<span class="dv">2025</span>))</span></code></pre></div>
 <p><img src="Series-de-tiempo_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb25-1" tabindex="-1"></a><span class="co"># Mostrar la predicción en consola</span></span>
-<span id="cb25-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb25-2" tabindex="-1"></a><span class="fu">print</span>(prediccion_hw)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb28-1" tabindex="-1"></a><span class="co"># Mostrar la predicción en consola</span></span>
+<span id="cb28-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb28-2" tabindex="-1"></a><span class="fu">print</span>(prediccion_hw)</span></code></pre></div>
 <pre><code>##          Point Forecast        Lo 80      Hi 80         Lo 95      Hi 95
-## Mar 2024   0.0596272209  0.044718323 0.07453612  3.682603e-02 0.08242841
-## Apr 2024   0.0565752463  0.032308344 0.08084215  1.946222e-02 0.09368827
-## May 2024   0.0523199834  0.018120176 0.08651979  1.589216e-05 0.10462407
-## Jun 2024   0.0465042847  0.001631737 0.09137683 -2.212236e-02 0.11513092
-## Jul 2024   0.0387576362 -0.017542243 0.09505752 -4.734560e-02 0.12486087
-## Aug 2024   0.0289763373 -0.039485745 0.09743842 -7.572738e-02 0.13368006
-## Sep 2024   0.0189350281 -0.062395928 0.10026598 -1.054499e-01 0.14331999
-## Oct 2024   0.0105207440 -0.084356633 0.10539812 -1.345817e-01 0.15562317
-## Nov 2024   0.0044176226 -0.104656074 0.11349132 -1.623962e-01 0.17123145
-## Dec 2024   0.0001412276 -0.123753186 0.12403564 -1.893389e-01 0.18962138
-## Jan 2025  -0.0028946175 -0.142210867 0.13642163 -2.159604e-01 0.21017120
-## Feb 2025  -0.0048360912 -0.160154101 0.15048192 -2.423745e-01 0.23270231</code></pre>
+## Sep 2024   0.0596272209  0.044718323 0.07453612  3.682603e-02 0.08242841
+## Oct 2024   0.0565752463  0.032308344 0.08084215  1.946222e-02 0.09368827
+## Nov 2024   0.0523199834  0.018120176 0.08651979  1.589216e-05 0.10462407
+## Dec 2024   0.0465042847  0.001631737 0.09137683 -2.212236e-02 0.11513092
+## Jan 2025   0.0387576362 -0.017542243 0.09505752 -4.734560e-02 0.12486087
+## Feb 2025   0.0289763373 -0.039485745 0.09743842 -7.572738e-02 0.13368006
+## Mar 2025   0.0189350281 -0.062395928 0.10026598 -1.054499e-01 0.14331999
+## Apr 2025   0.0105207440 -0.084356633 0.10539812 -1.345817e-01 0.15562317
+## May 2025   0.0044176226 -0.104656074 0.11349132 -1.623962e-01 0.17123145
+## Jun 2025   0.0001412276 -0.123753186 0.12403564 -1.893389e-01 0.18962138
+## Jul 2025  -0.0028946175 -0.142210867 0.13642163 -2.159604e-01 0.21017120
+## Aug 2025  -0.0048360912 -0.160154101 0.15048192 -2.423745e-01 0.23270231</code></pre>
 <p>La línea de predicción central del IPC se mantiene alrededor de un valor constante cercano a 0 en el eje y, sugiriendo que el modelo no espera grandes variaciones en los precios a corto plazo.</p>
 <p>Hacia el final de la proyección, el IPC muestra una ligera inclinación hacia valores negativos, alrededor de -0.05, lo que podría interpretarse como una leve deflación o reducción en el nivel de precios en el futuro cercano.</p>
 <p>Los intervalos de confianza aumentan, desde aproximadamente ±0.02 al inicio de la predicción hasta ±0.1 hacia el final. Esto indica una mayor incertidumbre en la precisión del pronóstico en períodos más lejanos.</p>
@@ -234,11 +234,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>La proyección central y los intervalos de confianza no muestran un aumento claro hacia valores positivos, lo que implica que no se espera un repunte inflacionario significativo en el corto plazo.</p>
 </div>
 <div id="suavizamiento-exponencial-simple" class="section level2 hasAnchor" number="5.2">
-<h2><span class="header-section-number">5.2</span> Suavizamiento exponencial simple<a href="modelo-holt-winters-y-suavizamiento-exponencial.html#suavizamiento-exponencial-simple" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb27-1" tabindex="-1"></a>modelo_ses <span class="ot">&lt;-</span> <span class="fu">ses</span>(Indice_ts, <span class="at">h =</span> <span class="dv">12</span>)  <span class="co"># &#39;h&#39; es el horizonte de pronóstico (en este caso, 5 períodos)</span></span></code></pre></div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb28-1" tabindex="-1"></a><span class="fu">plot</span>(modelo_ses,<span class="at">main =</span> <span class="st">&quot;Predicción modelo SES para IPC&quot;</span>,<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2015</span>,<span class="dv">2025</span>))</span></code></pre></div>
+<h2><span class="header-section-number">5.2</span> <strong>Suavizamiento exponencial simple</strong><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#suavizamiento-exponencial-simple" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb30-1" tabindex="-1"></a>modelo_ses <span class="ot">&lt;-</span> <span class="fu">ses</span>(Indice_ts, <span class="at">h =</span> <span class="dv">12</span>)  <span class="co"># &#39;h&#39; es el horizonte de pronóstico (en este caso, 5 períodos)</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb31-1" tabindex="-1"></a><span class="fu">plot</span>(modelo_ses,<span class="at">main =</span> <span class="st">&quot;Predicción modelo SES para IPC&quot;</span>,<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2015</span>,<span class="dv">2025</span>))</span></code></pre></div>
 <p><img src="Series-de-tiempo_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb29-1" tabindex="-1"></a><span class="fu">summary</span>(modelo_ses)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb32-1" tabindex="-1"></a><span class="fu">summary</span>(modelo_ses)</span></code></pre></div>
 <pre><code>## 
 ## Forecast method: Simple exponential smoothing
 ## 
@@ -265,18 +265,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Forecasts:
 ##          Point Forecast      Lo 80      Hi 80         Lo 95      Hi 95
-## Mar 2024     0.06120074 0.04699251 0.07540897  0.0394711273 0.08293035
-## Apr 2024     0.06120074 0.04110827 0.08129321  0.0304719636 0.09192952
-## May 2024     0.06120074 0.03659300 0.08580848  0.0235664560 0.09883502
-## Jun 2024     0.06120074 0.03278641 0.08961507  0.0177447742 0.10465671
-## Jul 2024     0.06120074 0.02943271 0.09296877  0.0126157362 0.10978574
-## Aug 2024     0.06120074 0.02640073 0.09600075  0.0079787123 0.11442277
-## Sep 2024     0.06120074 0.02361252 0.09878896  0.0037145167 0.11868696
-## Oct 2024     0.06120074 0.02101731 0.10138417 -0.0002545079 0.12265599
-## Nov 2024     0.06120074 0.01857984 0.10382164 -0.0039823033 0.12638378
-## Dec 2024     0.06120074 0.01627442 0.10612706 -0.0075081442 0.12990962
-## Jan 2025     0.06120074 0.01408166 0.10831982 -0.0108616801 0.13326316
-## Feb 2025     0.06120074 0.01198650 0.11041498 -0.0140659461 0.13646743</code></pre>
+## Sep 2024     0.06120074 0.04699251 0.07540897  0.0394711273 0.08293035
+## Oct 2024     0.06120074 0.04110827 0.08129321  0.0304719636 0.09192952
+## Nov 2024     0.06120074 0.03659300 0.08580848  0.0235664560 0.09883502
+## Dec 2024     0.06120074 0.03278641 0.08961507  0.0177447742 0.10465671
+## Jan 2025     0.06120074 0.02943271 0.09296877  0.0126157362 0.10978574
+## Feb 2025     0.06120074 0.02640073 0.09600075  0.0079787123 0.11442277
+## Mar 2025     0.06120074 0.02361252 0.09878896  0.0037145167 0.11868696
+## Apr 2025     0.06120074 0.02101731 0.10138417 -0.0002545079 0.12265599
+## May 2025     0.06120074 0.01857984 0.10382164 -0.0039823033 0.12638378
+## Jun 2025     0.06120074 0.01627442 0.10612706 -0.0075081442 0.12990962
+## Jul 2025     0.06120074 0.01408166 0.10831982 -0.0108616801 0.13326316
+## Aug 2025     0.06120074 0.01198650 0.11041498 -0.0140659461 0.13646743</code></pre>
 <p>La predicción para el IPC muestra que los precios parecen estabilizarse, con valores cercanos a cero hacia finales de 2024 e inicios de 2025. Esto sugiere que el crecimiento en los precios podría frenarse, manteniendo la economía sin grandes cambios en el corto plazo.</p>
 <p>Los valores negativos pronosticados a partir de finales de 2024 indican una posible deflación o disminución en los precios. Esto podría influir en el consumo y en las decisiones de inversión, ya que una baja en los precios puede cambiar las expectativas económicas.</p>
 <p>Los intervalos de confianza relativamente estrechos en el horizonte cercano (2024) indican que el modelo tiene una buena certeza en sus predicciones a corto plazo, sugiriendo que no se esperan fluctuaciones significativas en el IPC en el próximo año.</p>
