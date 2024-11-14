@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Capítulo 2 CARGA Y DESCRIPCIÓN DE LOS DATOS | Series-de-tiempo.knit</title>
+  <title>Capítulo 2 CARGA Y DESCRIPCIÓN DE LOS DATOS | Proyecto-Series-Tiempo.knit</title>
   <meta name="description" content="" />
   <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Capítulo 2 CARGA Y DESCRIPCIÓN DE LOS DATOS | Series-de-tiempo.knit" />
+  <meta property="og:title" content="Capítulo 2 CARGA Y DESCRIPCIÓN DE LOS DATOS | Proyecto-Series-Tiempo.knit" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Capítulo 2 CARGA Y DESCRIPCIÓN DE LOS DATOS | Series-de-tiempo.knit" />
+  <meta name="twitter:title" content="Capítulo 2 CARGA Y DESCRIPCIÓN DE LOS DATOS | Proyecto-Series-Tiempo.knit" />
   
   
   
@@ -264,6 +264,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-11"><a href="carga-y-descripción-de-los-datos.html#cb9-11" tabindex="-1"></a><span class="co"># eliminar faltantes</span></span>
 <span id="cb9-12"><a href="carga-y-descripción-de-los-datos.html#cb9-12" tabindex="-1"></a>data <span class="ot">&lt;-</span> data[<span class="sc">!</span><span class="fu">is.na</span>(data<span class="sc">$</span>Tiempo) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(data<span class="sc">$</span>IPC), ] </span></code></pre></div>
 <p>Después, se convierte la data en tipo serie de tiempo mediante la funcion ts. A continuación, se puede ver como los datos quedaron organizados en una matriz donde las filas son años y las columnas meses y el dato correspondiente se encuentra en el cruce de ambas.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="carga-y-descripción-de-los-datos.html#cb10-1" tabindex="-1"></a>min_Tiempo <span class="ot">&lt;-</span> <span class="fu">min</span>(data<span class="sc">$</span>Tiempo, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co">#encontrar el minimo de la variable mes</span></span>
+<span id="cb10-2"><a href="carga-y-descripción-de-los-datos.html#cb10-2" tabindex="-1"></a><span class="co">#convertir los datos en serie de tiempo</span></span>
+<span id="cb10-3"><a href="carga-y-descripción-de-los-datos.html#cb10-3" tabindex="-1"></a>Indice_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(data<span class="sc">$</span>IPC, <span class="at">start =</span> <span class="fu">c</span>(<span class="fu">as.numeric</span>(<span class="fu">format</span>(min_Tiempo, <span class="st">&quot;%Y&quot;</span>)), <span class="fu">as.numeric</span>(<span class="fu">format</span>(min_Tiempo, <span class="st">&quot;%m&quot;</span>))), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb10-4"><a href="carga-y-descripción-de-los-datos.html#cb10-4" tabindex="-1"></a><span class="fu">print</span>(Indice_ts) <span class="co"># imprimir datos</span></span></code></pre></div>
 <pre><code>##          Jan     Feb     Mar     Apr     May     Jun     Jul     Aug     Sep     Oct     Nov     Dec
 ## 1955                                                 -0.0087 -0.0001  0.0084  0.0077  0.0144  0.0203
 ## 1956  0.0210  0.0257  0.0310  0.0304  0.0425  0.0528  0.0636  0.0576  0.0726  0.0831  0.0883  0.0791
@@ -335,7 +339,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 2022  0.0694  0.0801  0.0853  0.0923  0.0907  0.0967  0.1021  0.1084  0.1144  0.1222  0.1253  0.1312
 ## 2023  0.1325  0.1328  0.1334  0.1282  0.1236  0.1213  0.1178  0.1143  0.1099  0.1048  0.1015  0.0928
 ## 2024  0.0835  0.0774  0.0736  0.0716  0.0716  0.0718  0.0686  0.0612</code></pre>
-<p>Luego de convertir los datos en serie de tiempo se realiza su descomposición para identificar los componenentes principales de la serie como la tendencia, estacionalidad y componente aleatorio (Residuos).</p>
 
 </div>
 </div>

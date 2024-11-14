@@ -2,6 +2,14 @@
 
 ## **Descomposición**
 
+Se realiza la descomposición para identificar los componenentes principales de la serie como la tendencia, estacionalidad y componente aleatorio (Residuos).
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# Descomponer la serie
+  descomposicion <- decompose(Indice_ts)
+```
+
+
 ```{r}
  # Graficar la descomposición
 g3<-autoplot(descomposicion) +

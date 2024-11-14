@@ -76,16 +76,10 @@ data <- data[!is.na(data$Tiempo) & !is.na(data$IPC), ]
 
 Después, se convierte la data en tipo serie de tiempo mediante la funcion ts. A continuación, se puede ver como los datos quedaron organizados en una matriz donde las filas son años y las columnas meses y el dato correspondiente se encuentra en el cruce de ambas.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 min_Tiempo <- min(data$Tiempo, na.rm = TRUE) #encontrar el minimo de la variable mes
 #convertir los datos en serie de tiempo
 Indice_ts <- ts(data$IPC, start = c(as.numeric(format(min_Tiempo, "%Y")), as.numeric(format(min_Tiempo, "%m"))), frequency = 12)
 print(Indice_ts) # imprimir datos
 ```
 
-Luego de convertir los datos en serie de tiempo se realiza su descomposición para identificar los componenentes principales de la serie como la tendencia, estacionalidad y componente aleatorio (Residuos).
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-# Descomponer la serie
-  descomposicion <- decompose(Indice_ts)
-```
