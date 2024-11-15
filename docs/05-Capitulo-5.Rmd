@@ -43,7 +43,7 @@ El componente estacional de Indice_ts no es significativo, debido a esto se apli
 
 
 
-```{r}
+```{r, warning=FALSE, echo=TRUE}
 Indice_ts_diff <- diff(Indice_ts)
 resultado_adf_diff <- adf.test(Indice_ts_diff, alternative = "stationary") 
 ```
@@ -90,7 +90,7 @@ checkresiduals(modelo_arima)
 ```{r, warning=FALSE, echo=TRUE}
 shapiro.test(residuales)
 ```
-El valor de 0.91154 sugiere que los residuales están algo alejados de seguir una distribución normal, lo cual se confirma con el p-value bajo.
+El valor de 0.91174 sugiere que los residuales están algo alejados de seguir una distribución normal, lo cual se confirma con el p-value bajo.
 
 ```{r, warning=FALSE, echo=TRUE}
 Box.test(residuales,type = "Ljung-Box")
