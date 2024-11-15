@@ -16,3 +16,9 @@ modelo-holt-winters-y-suavizamiento-exponencial
 holt-winters
 suavizamiento-exponencial-simple
 comparacion-entre-hw-y-ses
+variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario
+modelo-lineal
+modelo-arima
+test-de-residuos-afc-y-pacf
+pronóstico
+resultados

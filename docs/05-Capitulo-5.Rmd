@@ -1,0 +1,101 @@
+# **VARIABLES EN EL TIEMPO, AJUSTE A MODELO LINEAL Y ESTACIONARIO**
+
+
+## Modelo lineal
+
+```{r, warning=FALSE, echo=TRUE}
+plot(Indice_ts, main="Índice en el tiempo", xlab="Tiempo", ylab="Índice")
+abline(reg = lm(Indice_ts ~ time(Indice_ts)))
+
+```
+
+
+```{r, warning=FALSE, echo=TRUE}
+cycle(Indice_ts)
+```
+```{r, warning=FALSE, echo=TRUE}
+plot(aggregate(Indice_ts,FUN=mean))
+```
+
+
+```{r, warning=FALSE, echo=TRUE}
+boxplot(Indice_ts~cycle(Indice_ts))
+```
+Se observan valores homegéneos en los meses y no se observan valores atípicos marcados.
+
+
+
+## Modelo ARIMA
+
+```{r}
+library(uroot)
+ocb_test <- ocsb.test(Indice_ts)
+print(ocb_test)
+```
+
+```{r}
+acf(Indice_ts)
+pacf(Indice_ts)
+```
+
+
+El componente estacional de Indice_ts no es significativo, debido a esto se aplicará el modelo ARIMA directamente.
+
+
+
+```{r}
+Indice_ts_diff <- diff(Indice_ts)
+resultado_adf_diff <- adf.test(Indice_ts_diff, alternative = "stationary") 
+```
+
+
+```{r, warning=FALSE, echo=TRUE}
+modelo_arima <- auto.arima(Indice_ts_diff)  
+summary(modelo_arima)
+```
+### Test de residuos, AFC y PACF
+
+```{r}
+Box.test(residuals(modelo_arima), type="Ljung-Box")
+acf(residuals(modelo_arima))
+pacf(residuals(modelo_arima))
+```
+
+De acuerdo con los resultados obtenidos, el p-value es mayor que 0.05, por lo que los residuales se pueden considerar como ruido blanco y el modelo representa bien la estructura de la serie de tiempo.
+
+
+### Pronóstico
+
+```{r, warning=FALSE, echo=TRUE}
+forecast_data <- forecast::forecast(modelo_arima, h = 12)
+plot(forecast_data, main = "Pronóstico del Índice")
+```
+
+```{r, warning=FALSE, echo=TRUE}
+plot(forecast_data, main = "Pronóstico del Índice", xlab = "Año", ylab = "Indice_ts_diff", xlim = c(2015, 2025))
+grid()
+```
+
+### Resultados
+
+```{r, warning=FALSE, echo=TRUE}
+residuales<-modelo_arima$residuals
+qqnorm(residuales)
+qqline(residuales)
+```
+```{r, warning=FALSE, echo=TRUE}
+checkresiduals(modelo_arima)
+```
+
+```{r, warning=FALSE, echo=TRUE}
+shapiro.test(residuales)
+```
+El valor de 0.91154 sugiere que los residuales están algo alejados de seguir una distribución normal, lo cual se confirma con el p-value bajo.
+
+```{r, warning=FALSE, echo=TRUE}
+Box.test(residuales,type = "Ljung-Box")
+```
+
+El valor X-squared bajo, indica que hay poca correlación en los residuales y dado que el p-value es alto, significa que los residuales pueden ser considerados como ruido blanco.
+
+

@@ -1,4 +1,4 @@
-# **Modelo Holt-Winters y suavizamiento exponencial**
+# **MODELO HOLT-WINTERS Y SUAVIZAMIENTO EXPONENCIAL**
 
 ## **Holt Winters**
 

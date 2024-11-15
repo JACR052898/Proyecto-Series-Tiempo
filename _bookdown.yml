@@ -14,7 +14,8 @@ rmd_files: [
   "docs/01-capitulo-1.Rmd",  # Incluye todos los capítulos, usa la ruta relativa a docs si están en esa carpeta
   "docs/02-capitulo-2.Rmd",
   "docs/03-capitulo-3.Rmd",
-  "docs/04-capitulo-4.Rmd"
+  "docs/04-capitulo-4.Rmd",
+  "docs/05-capitulo-5.Rmd"
   # Agrega más capítulos aquí
 ]
 

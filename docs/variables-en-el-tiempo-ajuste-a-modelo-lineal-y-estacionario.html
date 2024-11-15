@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 6 VARIABLES EN EL TIEMPO, AJUSTE A MODELO LINEAL Y ESTACIONARIO | Proyecto-Series-Tiempo.knit</title>
+  <meta name="description" content="" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 6 VARIABLES EN EL TIEMPO, AJUSTE A MODELO LINEAL Y ESTACIONARIO | Proyecto-Series-Tiempo.knit" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 6 VARIABLES EN EL TIEMPO, AJUSTE A MODELO LINEAL Y ESTACIONARIO | Proyecto-Series-Tiempo.knit" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="modelo-holt-winters-y-suavizamiento-exponencial.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Series-de-tiempo</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="serie-de-tiempo.html"><a href="serie-de-tiempo.html"><i class="fa fa-check"></i><b>1</b> SERIE DE TIEMPO</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="serie-de-tiempo.html"><a href="serie-de-tiempo.html#referencia"><i class="fa fa-check"></i><b>1.1</b> <strong>Referencia</strong></a></li>
+<li class="chapter" data-level="1.2" data-path="serie-de-tiempo.html"><a href="serie-de-tiempo.html#herramientas-utilizadas"><i class="fa fa-check"></i><b>1.2</b> <strong>Herramientas utilizadas</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="carga-y-descripción-de-los-datos.html"><a href="carga-y-descripción-de-los-datos.html"><i class="fa fa-check"></i><b>2</b> <strong>CARGA Y DESCRIPCIÓN DE LOS DATOS</strong></a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="carga-y-descripción-de-los-datos.html"><a href="carga-y-descripción-de-los-datos.html#carga-de-los-datos"><i class="fa fa-check"></i><b>2.1</b> <strong>Carga de los datos</strong></a></li>
+<li class="chapter" data-level="2.2" data-path="carga-y-descripción-de-los-datos.html"><a href="carga-y-descripción-de-los-datos.html#descripción-de-la-base-de-datos"><i class="fa fa-check"></i><b>2.2</b> <strong>Descripción de la base de datos</strong></a></li>
+<li class="chapter" data-level="2.3" data-path="carga-y-descripción-de-los-datos.html"><a href="carga-y-descripción-de-los-datos.html#pre-procesamiento-de-datos"><i class="fa fa-check"></i><b>2.3</b> <strong>Pre-procesamiento de datos</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visualización-de-la-serie-de-tiempo-y-sus-componentes.html"><a href="visualización-de-la-serie-de-tiempo-y-sus-componentes.html"><i class="fa fa-check"></i><b>3</b> <strong>VISUALIZACIÓN DE LA SERIE DE TIEMPO Y SUS COMPONENTES</strong></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="visualización-de-la-serie-de-tiempo-y-sus-componentes.html"><a href="visualización-de-la-serie-de-tiempo-y-sus-componentes.html#promedio-móvil"><i class="fa fa-check"></i><b>3.1</b> <strong>Promedio móvil</strong></a></li>
+<li class="chapter" data-level="3.2" data-path="visualización-de-la-serie-de-tiempo-y-sus-componentes.html"><a href="visualización-de-la-serie-de-tiempo-y-sus-componentes.html#rezago"><i class="fa fa-check"></i><b>3.2</b> <strong>Rezago</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="descomposición-de-la-serie-de-tiempo.html"><a href="descomposición-de-la-serie-de-tiempo.html"><i class="fa fa-check"></i><b>4</b> <strong>DESCOMPOSICIÓN DE LA SERIE DE TIEMPO</strong></a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="descomposición-de-la-serie-de-tiempo.html"><a href="descomposición-de-la-serie-de-tiempo.html#descomposición"><i class="fa fa-check"></i><b>4.1</b> <strong>Descomposición</strong></a></li>
+<li class="chapter" data-level="4.2" data-path="descomposición-de-la-serie-de-tiempo.html"><a href="descomposición-de-la-serie-de-tiempo.html#estacionariedad"><i class="fa fa-check"></i><b>4.2</b> <strong>Estacionariedad</strong></a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="descomposición-de-la-serie-de-tiempo.html"><a href="descomposición-de-la-serie-de-tiempo.html#resultado-prueba-de-estacionariedad"><i class="fa fa-check"></i><b>4.2.1</b> <strong>Resultado prueba de estacionariedad</strong></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html"><i class="fa fa-check"></i><b>5</b> <strong>MODELO HOLT-WINTERS Y SUAVIZAMIENTO EXPONENCIAL</strong></a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#holt-winters"><i class="fa fa-check"></i><b>5.1</b> <strong>Holt Winters</strong></a></li>
+<li class="chapter" data-level="5.2" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#suavizamiento-exponencial-simple"><i class="fa fa-check"></i><b>5.2</b> <strong>Suavizamiento exponencial simple</strong></a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#comparacion-entre-hw-y-ses"><i class="fa fa-check"></i><b>5.2.1</b> Comparacion entre HW y SES</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><i class="fa fa-check"></i><b>6</b> <strong>VARIABLES EN EL TIEMPO, AJUSTE A MODELO LINEAL Y ESTACIONARIO</strong></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#modelo-lineal"><i class="fa fa-check"></i><b>6.1</b> Modelo lineal</a></li>
+<li class="chapter" data-level="6.2" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#modelo-arima"><i class="fa fa-check"></i><b>6.2</b> Modelo ARIMA</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#test-de-residuos-afc-y-pacf"><i class="fa fa-check"></i><b>6.2.1</b> Test de residuos, AFC y PACF</a></li>
+<li class="chapter" data-level="6.2.2" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#pronóstico"><i class="fa fa-check"></i><b>6.2.2</b> Pronóstico</a></li>
+<li class="chapter" data-level="6.2.3" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#resultados"><i class="fa fa-check"></i><b>6.2.3</b> Resultados</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Capítulo 6</span> <strong>VARIABLES EN EL TIEMPO, AJUSTE A MODELO LINEAL Y ESTACIONARIO</strong><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="modelo-lineal" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Modelo lineal<a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#modelo-lineal" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb33-1" tabindex="-1"></a><span class="fu">plot</span>(Indice_ts, <span class="at">main=</span><span class="st">&quot;Índice en el tiempo&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Tiempo&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Índice&quot;</span>)</span>
+<span id="cb33-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb33-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">reg =</span> <span class="fu">lm</span>(Indice_ts <span class="sc">~</span> <span class="fu">time</span>(Indice_ts)))</span></code></pre></div>
+<p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb34-1" tabindex="-1"></a><span class="fu">cycle</span>(Indice_ts)</span></code></pre></div>
+<pre><code>##      Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+## 1955                           7   8   9  10  11  12
+## 1956   1   2   3   4   5   6   7   8   9  10  11  12
+## 1957   1   2   3   4   5   6   7   8   9  10  11  12
+## 1958   1   2   3   4   5   6   7   8   9  10  11  12
+## 1959   1   2   3   4   5   6   7   8   9  10  11  12
+## 1960   1   2   3   4   5   6   7   8   9  10  11  12
+## 1961   1   2   3   4   5   6   7   8   9  10  11  12
+## 1962   1   2   3   4   5   6   7   8   9  10  11  12
+## 1963   1   2   3   4   5   6   7   8   9  10  11  12
+## 1964   1   2   3   4   5   6   7   8   9  10  11  12
+## 1965   1   2   3   4   5   6   7   8   9  10  11  12
+## 1966   1   2   3   4   5   6   7   8   9  10  11  12
+## 1967   1   2   3   4   5   6   7   8   9  10  11  12
+## 1968   1   2   3   4   5   6   7   8   9  10  11  12
+## 1969   1   2   3   4   5   6   7   8   9  10  11  12
+## 1970   1   2   3   4   5   6   7   8   9  10  11  12
+## 1971   1   2   3   4   5   6   7   8   9  10  11  12
+## 1972   1   2   3   4   5   6   7   8   9  10  11  12
+## 1973   1   2   3   4   5   6   7   8   9  10  11  12
+## 1974   1   2   3   4   5   6   7   8   9  10  11  12
+## 1975   1   2   3   4   5   6   7   8   9  10  11  12
+## 1976   1   2   3   4   5   6   7   8   9  10  11  12
+## 1977   1   2   3   4   5   6   7   8   9  10  11  12
+## 1978   1   2   3   4   5   6   7   8   9  10  11  12
+## 1979   1   2   3   4   5   6   7   8   9  10  11  12
+## 1980   1   2   3   4   5   6   7   8   9  10  11  12
+## 1981   1   2   3   4   5   6   7   8   9  10  11  12
+## 1982   1   2   3   4   5   6   7   8   9  10  11  12
+## 1983   1   2   3   4   5   6   7   8   9  10  11  12
+## 1984   1   2   3   4   5   6   7   8   9  10  11  12
+## 1985   1   2   3   4   5   6   7   8   9  10  11  12
+## 1986   1   2   3   4   5   6   7   8   9  10  11  12
+## 1987   1   2   3   4   5   6   7   8   9  10  11  12
+## 1988   1   2   3   4   5   6   7   8   9  10  11  12
+## 1989   1   2   3   4   5   6   7   8   9  10  11  12
+## 1990   1   2   3   4   5   6   7   8   9  10  11  12
+## 1991   1   2   3   4   5   6   7   8   9  10  11  12
+## 1992   1   2   3   4   5   6   7   8   9  10  11  12
+## 1993   1   2   3   4   5   6   7   8   9  10  11  12
+## 1994   1   2   3   4   5   6   7   8   9  10  11  12
+## 1995   1   2   3   4   5   6   7   8   9  10  11  12
+## 1996   1   2   3   4   5   6   7   8   9  10  11  12
+## 1997   1   2   3   4   5   6   7   8   9  10  11  12
+## 1998   1   2   3   4   5   6   7   8   9  10  11  12
+## 1999   1   2   3   4   5   6   7   8   9  10  11  12
+## 2000   1   2   3   4   5   6   7   8   9  10  11  12
+## 2001   1   2   3   4   5   6   7   8   9  10  11  12
+## 2002   1   2   3   4   5   6   7   8   9  10  11  12
+## 2003   1   2   3   4   5   6   7   8   9  10  11  12
+## 2004   1   2   3   4   5   6   7   8   9  10  11  12
+## 2005   1   2   3   4   5   6   7   8   9  10  11  12
+## 2006   1   2   3   4   5   6   7   8   9  10  11  12
+## 2007   1   2   3   4   5   6   7   8   9  10  11  12
+## 2008   1   2   3   4   5   6   7   8   9  10  11  12
+## 2009   1   2   3   4   5   6   7   8   9  10  11  12
+## 2010   1   2   3   4   5   6   7   8   9  10  11  12
+## 2011   1   2   3   4   5   6   7   8   9  10  11  12
+## 2012   1   2   3   4   5   6   7   8   9  10  11  12
+## 2013   1   2   3   4   5   6   7   8   9  10  11  12
+## 2014   1   2   3   4   5   6   7   8   9  10  11  12
+## 2015   1   2   3   4   5   6   7   8   9  10  11  12
+## 2016   1   2   3   4   5   6   7   8   9  10  11  12
+## 2017   1   2   3   4   5   6   7   8   9  10  11  12
+## 2018   1   2   3   4   5   6   7   8   9  10  11  12
+## 2019   1   2   3   4   5   6   7   8   9  10  11  12
+## 2020   1   2   3   4   5   6   7   8   9  10  11  12
+## 2021   1   2   3   4   5   6   7   8   9  10  11  12
+## 2022   1   2   3   4   5   6   7   8   9  10  11  12
+## 2023   1   2   3   4   5   6   7   8   9  10  11  12
+## 2024   1   2   3   4   5   6   7   8</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb36-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">aggregate</span>(Indice_ts,<span class="at">FUN=</span>mean))</span></code></pre></div>
+<p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb37-1" tabindex="-1"></a><span class="fu">boxplot</span>(Indice_ts<span class="sc">~</span><span class="fu">cycle</span>(Indice_ts))</span></code></pre></div>
+<p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-23-1.png" width="672" />
+Se observan valores homegéneos en los meses y no se observan valores atípicos marcados.</p>
+</div>
+<div id="modelo-arima" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Modelo ARIMA<a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#modelo-arima" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb38-1" tabindex="-1"></a><span class="fu">library</span>(uroot)</span>
+<span id="cb38-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb38-2" tabindex="-1"></a>ocb_test <span class="ot">&lt;-</span> <span class="fu">ocsb.test</span>(Indice_ts)</span>
+<span id="cb38-3"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb38-3" tabindex="-1"></a><span class="fu">print</span>(ocb_test)</span></code></pre></div>
+<pre><code>## 
+##  OCSB test
+## 
+## data:  Indice_ts
+## 
+## Test statistic: -51.3138, 5% critical value: -1.803
+## alternative hypothesis: stationary
+## 
+## Lag order 0 was selected using fixed</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb40-1" tabindex="-1"></a><span class="fu">acf</span>(Indice_ts)</span></code></pre></div>
+<p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb41-1" tabindex="-1"></a><span class="fu">pacf</span>(Indice_ts)</span></code></pre></div>
+<p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-25-2.png" width="672" /></p>
+<p>El componente estacional de Indice_ts no es significativo, debido a esto se aplicará el modelo ARIMA directamente.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb42-1" tabindex="-1"></a>Indice_ts_diff <span class="ot">&lt;-</span> <span class="fu">diff</span>(Indice_ts)</span>
+<span id="cb42-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb42-2" tabindex="-1"></a>resultado_adf_diff <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(Indice_ts_diff, <span class="at">alternative =</span> <span class="st">&quot;stationary&quot;</span>) </span></code></pre></div>
+<pre><code>## Warning in adf.test(Indice_ts_diff, alternative = &quot;stationary&quot;): p-value smaller than printed p-value</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb44-1" tabindex="-1"></a>modelo_arima <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(Indice_ts_diff)  </span>
+<span id="cb44-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb44-2" tabindex="-1"></a><span class="fu">summary</span>(modelo_arima)</span></code></pre></div>
+<pre><code>## Series: Indice_ts_diff 
+## ARIMA(2,0,1)(0,0,2)[12] with zero mean 
+## 
+## Coefficients:
+##          ar1     ar2     ma1     sma1    sma2
+##       0.1628  0.3147  0.3815  -0.8884  0.0833
+## s.e.  0.2118  0.1230  0.2159   0.0373  0.0375
+## 
+## sigma^2 = 5.259e-05:  log likelihood = 2903.25
+## AIC=-5794.5   AICc=-5794.4   BIC=-5766.18
+## 
+## Training set error measures:
+##                        ME      RMSE         MAE MPE MAPE      MASE        ACF1
+## Training set 4.972306e-05 0.0072301 0.004844645 NaN  Inf 0.3930951 0.003467245</code></pre>
+<div id="test-de-residuos-afc-y-pacf" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Test de residuos, AFC y PACF<a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#test-de-residuos-afc-y-pacf" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb46-1" tabindex="-1"></a><span class="fu">Box.test</span>(<span class="fu">residuals</span>(modelo_arima), <span class="at">type=</span><span class="st">&quot;Ljung-Box&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+##  Box-Ljung test
+## 
+## data:  residuals(modelo_arima)
+## X-squared = 0.010002, df = 1, p-value = 0.9203</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb48-1" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(modelo_arima))</span></code></pre></div>
+<p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb49-1" tabindex="-1"></a><span class="fu">pacf</span>(<span class="fu">residuals</span>(modelo_arima))</span></code></pre></div>
+<p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-28-2.png" width="672" /></p>
+<p>De acuerdo con los resultados obtenidos, el p-value es mayor que 0.05, por lo que los residuales se pueden considerar como ruido blanco y el modelo representa bien la estructura de la serie de tiempo.</p>
+</div>
+<div id="pronóstico" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> Pronóstico<a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#pronóstico" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb50-1" tabindex="-1"></a>forecast_data <span class="ot">&lt;-</span> forecast<span class="sc">::</span><span class="fu">forecast</span>(modelo_arima, <span class="at">h =</span> <span class="dv">12</span>)</span>
+<span id="cb50-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb50-2" tabindex="-1"></a><span class="fu">plot</span>(forecast_data, <span class="at">main =</span> <span class="st">&quot;Pronóstico del Índice&quot;</span>)</span></code></pre></div>
+<p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb51-1" tabindex="-1"></a><span class="fu">plot</span>(forecast_data, <span class="at">main =</span> <span class="st">&quot;Pronóstico del Índice&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Año&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Indice_ts_diff&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2015</span>, <span class="dv">2025</span>))</span>
+<span id="cb51-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb51-2" tabindex="-1"></a><span class="fu">grid</span>()</span></code></pre></div>
+<p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+</div>
+<div id="resultados" class="section level3 hasAnchor" number="6.2.3">
+<h3><span class="header-section-number">6.2.3</span> Resultados<a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#resultados" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb52-1" tabindex="-1"></a>residuales<span class="ot">&lt;-</span>modelo_arima<span class="sc">$</span>residuals</span>
+<span id="cb52-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb52-2" tabindex="-1"></a><span class="fu">qqnorm</span>(residuales)</span>
+<span id="cb52-3"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb52-3" tabindex="-1"></a><span class="fu">qqline</span>(residuales)</span></code></pre></div>
+<p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb53-1" tabindex="-1"></a><span class="fu">checkresiduals</span>(modelo_arima)</span></code></pre></div>
+<p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<pre><code>## 
+##  Ljung-Box test
+## 
+## data:  Residuals from ARIMA(2,0,1)(0,0,2)[12] with zero mean
+## Q* = 63.564, df = 19, p-value = 1.043e-06
+## 
+## Model df: 5.   Total lags used: 24</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb55-1" tabindex="-1"></a><span class="fu">shapiro.test</span>(residuales)</span></code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  residuales
+## W = 0.91174, p-value &lt; 2.2e-16</code></pre>
+<p>El valor de 0.91154 sugiere que los residuales están algo alejados de seguir una distribución normal, lo cual se confirma con el p-value bajo.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb57-1" tabindex="-1"></a><span class="fu">Box.test</span>(residuales,<span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+##  Box-Ljung test
+## 
+## data:  residuales
+## X-squared = 0.010002, df = 1, p-value = 0.9203</code></pre>
+<p>El valor X-squared bajo, indica que hay poca correlación en los residuales y dado que el p-value es alto, significa que los residuales pueden ser considerados como ruido blanco.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="modelo-holt-winters-y-suavizamiento-exponencial.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/Proyecto-Series-Tiempo/edit/master/docs/05-capitulo-5.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/JACR052898/Proyecto-Series-Tiempo/blob/master/docs/05-capitulo-5.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

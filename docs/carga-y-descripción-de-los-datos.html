@@ -170,12 +170,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.1" data-path="descomposición-de-la-serie-de-tiempo.html"><a href="descomposición-de-la-serie-de-tiempo.html#resultado-prueba-de-estacionariedad"><i class="fa fa-check"></i><b>4.2.1</b> <strong>Resultado prueba de estacionariedad</strong></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html"><i class="fa fa-check"></i><b>5</b> <strong>Modelo Holt-Winters y suavizamiento exponencial</strong></a>
+<li class="chapter" data-level="5" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html"><i class="fa fa-check"></i><b>5</b> <strong>MODELO HOLT-WINTERS Y SUAVIZAMIENTO EXPONENCIAL</strong></a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#holt-winters"><i class="fa fa-check"></i><b>5.1</b> <strong>Holt Winters</strong></a></li>
 <li class="chapter" data-level="5.2" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#suavizamiento-exponencial-simple"><i class="fa fa-check"></i><b>5.2</b> <strong>Suavizamiento exponencial simple</strong></a>
 <ul>
 <li class="chapter" data-level="5.2.1" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#comparacion-entre-hw-y-ses"><i class="fa fa-check"></i><b>5.2.1</b> Comparacion entre HW y SES</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><i class="fa fa-check"></i><b>6</b> <strong>VARIABLES EN EL TIEMPO, AJUSTE A MODELO LINEAL Y ESTACIONARIO</strong></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#modelo-lineal"><i class="fa fa-check"></i><b>6.1</b> Modelo lineal</a></li>
+<li class="chapter" data-level="6.2" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#modelo-arima"><i class="fa fa-check"></i><b>6.2</b> Modelo ARIMA</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#test-de-residuos-afc-y-pacf"><i class="fa fa-check"></i><b>6.2.1</b> Test de residuos, AFC y PACF</a></li>
+<li class="chapter" data-level="6.2.2" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#pronóstico"><i class="fa fa-check"></i><b>6.2.2</b> Pronóstico</a></li>
+<li class="chapter" data-level="6.2.3" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#resultados"><i class="fa fa-check"></i><b>6.2.3</b> Resultados</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -209,7 +219,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-3"><a href="carga-y-descripción-de-los-datos.html#cb2-3" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
 <span id="cb2-4"><a href="carga-y-descripción-de-los-datos.html#cb2-4" tabindex="-1"></a><span class="fu">library</span>(zoo)</span>
 <span id="cb2-5"><a href="carga-y-descripción-de-los-datos.html#cb2-5" tabindex="-1"></a><span class="fu">library</span>(grid)</span>
-<span id="cb2-6"><a href="carga-y-descripción-de-los-datos.html#cb2-6" tabindex="-1"></a><span class="fu">library</span>(plotly)</span></code></pre></div>
+<span id="cb2-6"><a href="carga-y-descripción-de-los-datos.html#cb2-6" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb2-7"><a href="carga-y-descripción-de-los-datos.html#cb2-7" tabindex="-1"></a><span class="fu">library</span>(TSA)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="carga-y-descripción-de-los-datos.html#cb3-1" tabindex="-1"></a><span class="fu">glimpse</span>(data)</span></code></pre></div>
 <pre><code>## Rows: 999
 ## Columns: 7

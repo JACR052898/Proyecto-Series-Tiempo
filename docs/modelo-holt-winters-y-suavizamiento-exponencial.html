@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Capítulo 5 Modelo Holt-Winters y suavizamiento exponencial | Proyecto-Series-Tiempo.knit</title>
+  <title>Capítulo 5 MODELO HOLT-WINTERS Y SUAVIZAMIENTO EXPONENCIAL | Proyecto-Series-Tiempo.knit</title>
   <meta name="description" content="" />
   <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Capítulo 5 Modelo Holt-Winters y suavizamiento exponencial | Proyecto-Series-Tiempo.knit" />
+  <meta property="og:title" content="Capítulo 5 MODELO HOLT-WINTERS Y SUAVIZAMIENTO EXPONENCIAL | Proyecto-Series-Tiempo.knit" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Capítulo 5 Modelo Holt-Winters y suavizamiento exponencial | Proyecto-Series-Tiempo.knit" />
+  <meta name="twitter:title" content="Capítulo 5 MODELO HOLT-WINTERS Y SUAVIZAMIENTO EXPONENCIAL | Proyecto-Series-Tiempo.knit" />
   
   
   
@@ -29,7 +29,7 @@
   
   
 <link rel="prev" href="descomposición-de-la-serie-de-tiempo.html"/>
-
+<link rel="next" href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -170,12 +170,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.1" data-path="descomposición-de-la-serie-de-tiempo.html"><a href="descomposición-de-la-serie-de-tiempo.html#resultado-prueba-de-estacionariedad"><i class="fa fa-check"></i><b>4.2.1</b> <strong>Resultado prueba de estacionariedad</strong></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html"><i class="fa fa-check"></i><b>5</b> <strong>Modelo Holt-Winters y suavizamiento exponencial</strong></a>
+<li class="chapter" data-level="5" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html"><i class="fa fa-check"></i><b>5</b> <strong>MODELO HOLT-WINTERS Y SUAVIZAMIENTO EXPONENCIAL</strong></a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#holt-winters"><i class="fa fa-check"></i><b>5.1</b> <strong>Holt Winters</strong></a></li>
 <li class="chapter" data-level="5.2" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#suavizamiento-exponencial-simple"><i class="fa fa-check"></i><b>5.2</b> <strong>Suavizamiento exponencial simple</strong></a>
 <ul>
 <li class="chapter" data-level="5.2.1" data-path="modelo-holt-winters-y-suavizamiento-exponencial.html"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#comparacion-entre-hw-y-ses"><i class="fa fa-check"></i><b>5.2.1</b> Comparacion entre HW y SES</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><i class="fa fa-check"></i><b>6</b> <strong>VARIABLES EN EL TIEMPO, AJUSTE A MODELO LINEAL Y ESTACIONARIO</strong></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#modelo-lineal"><i class="fa fa-check"></i><b>6.1</b> Modelo lineal</a></li>
+<li class="chapter" data-level="6.2" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#modelo-arima"><i class="fa fa-check"></i><b>6.2</b> Modelo ARIMA</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#test-de-residuos-afc-y-pacf"><i class="fa fa-check"></i><b>6.2.1</b> Test de residuos, AFC y PACF</a></li>
+<li class="chapter" data-level="6.2.2" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#pronóstico"><i class="fa fa-check"></i><b>6.2.2</b> Pronóstico</a></li>
+<li class="chapter" data-level="6.2.3" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#resultados"><i class="fa fa-check"></i><b>6.2.3</b> Resultados</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -199,21 +209,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="modelo-holt-winters-y-suavizamiento-exponencial" class="section level1 hasAnchor" number="5">
-<h1><span class="header-section-number">Capítulo 5</span> <strong>Modelo Holt-Winters y suavizamiento exponencial</strong><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#modelo-holt-winters-y-suavizamiento-exponencial" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<h1><span class="header-section-number">Capítulo 5</span> <strong>MODELO HOLT-WINTERS Y SUAVIZAMIENTO EXPONENCIAL</strong><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#modelo-holt-winters-y-suavizamiento-exponencial" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="holt-winters" class="section level2 hasAnchor" number="5.1">
 <h2><span class="header-section-number">5.1</span> <strong>Holt Winters</strong><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#holt-winters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb26-1" tabindex="-1"></a><span class="co"># Aplicar el método de Holt-Winters con estacionalidad aditiva</span></span>
-<span id="cb26-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb26-2" tabindex="-1"></a>modelo_hw <span class="ot">&lt;-</span> <span class="fu">HoltWinters</span>(Indice_ts, <span class="at">seasonal =</span> <span class="st">&quot;additive&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb27-1" tabindex="-1"></a><span class="co"># Visualizar el ajuste del modelo</span></span>
-<span id="cb27-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb27-2" tabindex="-1"></a>g4<span class="ot">&lt;-</span><span class="fu">plot</span>(modelo_hw, <span class="at">main =</span> <span class="st">&quot;Ajuste del Modelo Holt-Winters para IPC&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb23-1" tabindex="-1"></a><span class="co"># Aplicar el método de Holt-Winters con estacionalidad aditiva</span></span>
+<span id="cb23-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb23-2" tabindex="-1"></a>modelo_hw <span class="ot">&lt;-</span> <span class="fu">HoltWinters</span>(Indice_ts, <span class="at">seasonal =</span> <span class="st">&quot;additive&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb24-1" tabindex="-1"></a><span class="co"># Visualizar el ajuste del modelo</span></span>
+<span id="cb24-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb24-2" tabindex="-1"></a>g4<span class="ot">&lt;-</span><span class="fu">plot</span>(modelo_hw, <span class="at">main =</span> <span class="st">&quot;Ajuste del Modelo Holt-Winters para IPC&quot;</span>)</span></code></pre></div>
+<p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb25-1" tabindex="-1"></a><span class="co"># Hacer una predicción a futuro (por ejemplo, para los próximos 12 meses)</span></span>
+<span id="cb25-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb25-2" tabindex="-1"></a>prediccion_hw <span class="ot">&lt;-</span> forecast<span class="sc">::</span><span class="fu">forecast</span>(modelo_hw, <span class="at">h =</span> <span class="dv">12</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb26-1" tabindex="-1"></a><span class="co"># Visualizar la predicción</span></span>
+<span id="cb26-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb26-2" tabindex="-1"></a><span class="fu">plot</span>(prediccion_hw, <span class="at">main =</span> <span class="st">&quot;Predicción de Holt-Winters para IPC&quot;</span>,<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2015</span>,<span class="dv">2025</span>))</span></code></pre></div>
 <p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb28-1" tabindex="-1"></a><span class="co"># Hacer una predicción a futuro (por ejemplo, para los próximos 12 meses)</span></span>
-<span id="cb28-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb28-2" tabindex="-1"></a>prediccion_hw <span class="ot">&lt;-</span> forecast<span class="sc">::</span><span class="fu">forecast</span>(modelo_hw, <span class="at">h =</span> <span class="dv">12</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb29-1" tabindex="-1"></a><span class="co"># Visualizar la predicción</span></span>
-<span id="cb29-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb29-2" tabindex="-1"></a><span class="fu">plot</span>(prediccion_hw, <span class="at">main =</span> <span class="st">&quot;Predicción de Holt-Winters para IPC&quot;</span>,<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2015</span>,<span class="dv">2025</span>))</span></code></pre></div>
-<p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb30-1" tabindex="-1"></a><span class="co"># Mostrar la predicción en consola</span></span>
-<span id="cb30-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb30-2" tabindex="-1"></a><span class="fu">print</span>(prediccion_hw)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb27-1" tabindex="-1"></a><span class="co"># Mostrar la predicción en consola</span></span>
+<span id="cb27-2"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb27-2" tabindex="-1"></a><span class="fu">print</span>(prediccion_hw)</span></code></pre></div>
 <pre><code>##          Point Forecast        Lo 80      Hi 80         Lo 95      Hi 95
 ## Sep 2024   0.0596272209  0.044718323 0.07453612  3.682603e-02 0.08242841
 ## Oct 2024   0.0565752463  0.032308344 0.08084215  1.946222e-02 0.09368827
@@ -235,10 +245,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="suavizamiento-exponencial-simple" class="section level2 hasAnchor" number="5.2">
 <h2><span class="header-section-number">5.2</span> <strong>Suavizamiento exponencial simple</strong><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#suavizamiento-exponencial-simple" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb32-1" tabindex="-1"></a>modelo_ses <span class="ot">&lt;-</span> <span class="fu">ses</span>(Indice_ts, <span class="at">h =</span> <span class="dv">12</span>)  <span class="co"># &#39;h&#39; es el horizonte de pronóstico (en este caso, 5 períodos)</span></span></code></pre></div>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb33-1" tabindex="-1"></a><span class="fu">plot</span>(modelo_ses,<span class="at">main =</span> <span class="st">&quot;Predicción modelo SES para IPC&quot;</span>,<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2015</span>,<span class="dv">2025</span>))</span></code></pre></div>
-<p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb34-1" tabindex="-1"></a><span class="fu">summary</span>(modelo_ses)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb29-1" tabindex="-1"></a>modelo_ses <span class="ot">&lt;-</span> <span class="fu">ses</span>(Indice_ts, <span class="at">h =</span> <span class="dv">12</span>)  <span class="co"># &#39;h&#39; es el horizonte de pronóstico (en este caso, 5 períodos)</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb30-1" tabindex="-1"></a><span class="fu">plot</span>(modelo_ses,<span class="at">main =</span> <span class="st">&quot;Predicción modelo SES para IPC&quot;</span>,<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2015</span>,<span class="dv">2025</span>))</span></code></pre></div>
+<p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="modelo-holt-winters-y-suavizamiento-exponencial.html#cb31-1" tabindex="-1"></a><span class="fu">summary</span>(modelo_ses)</span></code></pre></div>
 <pre><code>## 
 ## Forecast method: Simple exponential smoothing
 ## 
@@ -292,8 +302,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="descomposición-de-la-serie-de-tiempo.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="descomposición-de-la-serie-de-tiempo.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
