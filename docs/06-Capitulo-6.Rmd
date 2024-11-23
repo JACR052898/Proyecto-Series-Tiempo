@@ -41,7 +41,7 @@ pprophet$ds<-as.Date(pprophet$ds)
 dyplot.prophet(mprophet, pprophet)
 ```
 
-En la anterior gráfica se puede observar que el modelo prophet se ajusta a la tendencia del IPC. Sin embargo, su ajuste es conservador, comportándose en los picos de la serie como un valor estable y central. Adicionalmente, se observan varios puntos de la serie original por fuera de los intervalos de confianza, lo que sugiere que una inferencia con bastante incertidumbre sobre la predicción.
+La gráfica muestra en negro los datos originales, en azul la predicción con el modelo prophet y la sombra azul el intervalo de confianza del 95%. Se puede observar que el modelo prophet se ajusta a la tendencia del IPC. Sin embargo, su ajuste es conservador, comportándose en los picos de la serie como un valor estable y central. Adicionalmente, se observan varios puntos de la serie original por fuera de los intervalos de confianza, lo que sugiere que una inferencia con bastante incertidumbre sobre la predicción.
 
 ```{r}
 prophet_plot_components(mprophet,pprophet)
