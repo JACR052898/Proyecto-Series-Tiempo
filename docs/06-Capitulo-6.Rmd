@@ -6,44 +6,44 @@
 library (prophet) # llamado de la libreria facebook.
 ```
 
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 # Ajuste inicial de los datos para entramiento del modelo
 dataprophet<-data[,-c(3,4)]
 colnames(dataprophet)<- c("ds","y") # se deben nombrar las columnas de esta forma.
 ```
 
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 # Limpieza ultimas 3 fechas
 dataprophet[c("828","829","830"),"ds"]<-c("2024-06-01","2024-07-01","2024-08-01")
 ```
 
 
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 # Entrenamiento del modelo Facebook Prophet
 mprophet<- prophet(dataprophet)
 ```
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 # Creacion de las fechas futuras para la prediccion
 future <- make_future_dataframe(mprophet,periods = 12 ,freq = 'month')
 tail(future)
 ```
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 # Prediccion mediante modelo Facebook
 pprophet<-predict(mprophet,future)
 ```
 
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 pprophet$ds<-as.Date(pprophet$ds)
 ```
 
 
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 dyplot.prophet(mprophet, pprophet)
 ```
 
 La gráfica muestra en negro los datos originales, en azul la predicción con el modelo prophet y la sombra azul el intervalo de confianza del 95%. Se puede observar que el modelo prophet se ajusta a la tendencia del IPC. Sin embargo, su ajuste es conservador, comportándose en los picos de la serie como un valor estable y central. Adicionalmente, se observan varios puntos de la serie original por fuera de los intervalos de confianza, lo que sugiere que una inferencia con bastante incertidumbre sobre la predicción.
 
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 prophet_plot_components(mprophet,pprophet)
 ```
 
