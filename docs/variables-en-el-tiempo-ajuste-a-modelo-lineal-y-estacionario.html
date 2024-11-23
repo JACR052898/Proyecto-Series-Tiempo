@@ -29,7 +29,7 @@
   
   
 <link rel="prev" href="modelo-holt-winters-y-suavizamiento-exponencial.html"/>
-
+<link rel="next" href="algoritmo-facebook-prophet.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -58,6 +58,14 @@
 <script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="libs/dygraphs-1.1.1/shapes.js"></script>
+<script src="libs/moment-2.8.4/moment.js"></script>
+<script src="libs/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="libs/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="libs/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<script src="libs/Dygraph.Plugins.Unzoom-1.0/unzoom.js"></script>
 
 
 <style type="text/css">
@@ -146,7 +154,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Series-de-tiempo</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="serie-de-tiempo.html"><a href="serie-de-tiempo.html"><i class="fa fa-check"></i><b>1</b> SERIE DE TIEMPO</a>
+<li class="chapter" data-level="1" data-path="serie-de-tiempo.html"><a href="serie-de-tiempo.html"><i class="fa fa-check"></i><b>1</b> <strong>SERIE DE TIEMPO</strong></a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="serie-de-tiempo.html"><a href="serie-de-tiempo.html#referencia"><i class="fa fa-check"></i><b>1.1</b> <strong>Referencia</strong></a></li>
 <li class="chapter" data-level="1.2" data-path="serie-de-tiempo.html"><a href="serie-de-tiempo.html#herramientas-utilizadas"><i class="fa fa-check"></i><b>1.2</b> <strong>Herramientas utilizadas</strong></a></li>
@@ -188,6 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2.3" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#resultados"><i class="fa fa-check"></i><b>6.2.3</b> Resultados</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="algoritmo-facebook-prophet.html"><a href="algoritmo-facebook-prophet.html"><i class="fa fa-check"></i><b>7</b> <strong>ALGORITMO FACEBOOK PROPHET</strong></a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -314,9 +323,8 @@ Se observan valores homegéneos en los meses y no se observan valores atípicos 
 <p>El componente estacional de Indice_ts no es significativo, debido a esto se aplicará el modelo ARIMA directamente.</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb42-1" tabindex="-1"></a>Indice_ts_diff <span class="ot">&lt;-</span> <span class="fu">diff</span>(Indice_ts)</span>
 <span id="cb42-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb42-2" tabindex="-1"></a>resultado_adf_diff <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(Indice_ts_diff, <span class="at">alternative =</span> <span class="st">&quot;stationary&quot;</span>) </span></code></pre></div>
-<pre><code>## Warning in adf.test(Indice_ts_diff, alternative = &quot;stationary&quot;): p-value smaller than printed p-value</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb44-1" tabindex="-1"></a>modelo_arima <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(Indice_ts_diff)  </span>
-<span id="cb44-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb44-2" tabindex="-1"></a><span class="fu">summary</span>(modelo_arima)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb43-1" tabindex="-1"></a>modelo_arima <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(Indice_ts_diff)  </span>
+<span id="cb43-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb43-2" tabindex="-1"></a><span class="fu">summary</span>(modelo_arima)</span></code></pre></div>
 <pre><code>## Series: Indice_ts_diff 
 ## ARIMA(2,0,1)(0,0,2)[12] with zero mean 
 ## 
@@ -333,34 +341,34 @@ Se observan valores homegéneos en los meses y no se observan valores atípicos 
 ## Training set 4.972306e-05 0.0072301 0.004844645 NaN  Inf 0.3930951 0.003467245</code></pre>
 <div id="test-de-residuos-afc-y-pacf" class="section level3 hasAnchor" number="6.2.1">
 <h3><span class="header-section-number">6.2.1</span> Test de residuos, AFC y PACF<a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#test-de-residuos-afc-y-pacf" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb46-1" tabindex="-1"></a><span class="fu">Box.test</span>(<span class="fu">residuals</span>(modelo_arima), <span class="at">type=</span><span class="st">&quot;Ljung-Box&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb45-1" tabindex="-1"></a><span class="fu">Box.test</span>(<span class="fu">residuals</span>(modelo_arima), <span class="at">type=</span><span class="st">&quot;Ljung-Box&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Box-Ljung test
 ## 
 ## data:  residuals(modelo_arima)
 ## X-squared = 0.010002, df = 1, p-value = 0.9203</code></pre>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb48-1" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(modelo_arima))</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb47-1" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(modelo_arima))</span></code></pre></div>
 <p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb49-1" tabindex="-1"></a><span class="fu">pacf</span>(<span class="fu">residuals</span>(modelo_arima))</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb48-1" tabindex="-1"></a><span class="fu">pacf</span>(<span class="fu">residuals</span>(modelo_arima))</span></code></pre></div>
 <p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-28-2.png" width="672" /></p>
 <p>De acuerdo con los resultados obtenidos, el p-value es mayor que 0.05, por lo que los residuales se pueden considerar como ruido blanco y el modelo representa bien la estructura de la serie de tiempo.</p>
 </div>
 <div id="pronóstico" class="section level3 hasAnchor" number="6.2.2">
 <h3><span class="header-section-number">6.2.2</span> Pronóstico<a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#pronóstico" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb50-1" tabindex="-1"></a>forecast_data <span class="ot">&lt;-</span> forecast<span class="sc">::</span><span class="fu">forecast</span>(modelo_arima, <span class="at">h =</span> <span class="dv">12</span>)</span>
-<span id="cb50-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb50-2" tabindex="-1"></a><span class="fu">plot</span>(forecast_data, <span class="at">main =</span> <span class="st">&quot;Pronóstico del Índice&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb49-1" tabindex="-1"></a>forecast_data <span class="ot">&lt;-</span> forecast<span class="sc">::</span><span class="fu">forecast</span>(modelo_arima, <span class="at">h =</span> <span class="dv">12</span>)</span>
+<span id="cb49-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb49-2" tabindex="-1"></a><span class="fu">plot</span>(forecast_data, <span class="at">main =</span> <span class="st">&quot;Pronóstico del Índice&quot;</span>)</span></code></pre></div>
 <p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb51-1" tabindex="-1"></a><span class="fu">plot</span>(forecast_data, <span class="at">main =</span> <span class="st">&quot;Pronóstico del Índice&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Año&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Indice_ts_diff&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2015</span>, <span class="dv">2025</span>))</span>
-<span id="cb51-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb51-2" tabindex="-1"></a><span class="fu">grid</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb50-1" tabindex="-1"></a><span class="fu">plot</span>(forecast_data, <span class="at">main =</span> <span class="st">&quot;Pronóstico del Índice&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Año&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Indice_ts_diff&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2015</span>, <span class="dv">2025</span>))</span>
+<span id="cb50-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb50-2" tabindex="-1"></a><span class="fu">grid</span>()</span></code></pre></div>
 <p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 </div>
 <div id="resultados" class="section level3 hasAnchor" number="6.2.3">
 <h3><span class="header-section-number">6.2.3</span> Resultados<a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#resultados" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb52-1" tabindex="-1"></a>residuales<span class="ot">&lt;-</span>modelo_arima<span class="sc">$</span>residuals</span>
-<span id="cb52-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb52-2" tabindex="-1"></a><span class="fu">qqnorm</span>(residuales)</span>
-<span id="cb52-3"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb52-3" tabindex="-1"></a><span class="fu">qqline</span>(residuales)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb51-1" tabindex="-1"></a>residuales<span class="ot">&lt;-</span>modelo_arima<span class="sc">$</span>residuals</span>
+<span id="cb51-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb51-2" tabindex="-1"></a><span class="fu">qqnorm</span>(residuales)</span>
+<span id="cb51-3"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb51-3" tabindex="-1"></a><span class="fu">qqline</span>(residuales)</span></code></pre></div>
 <p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb53-1" tabindex="-1"></a><span class="fu">checkresiduals</span>(modelo_arima)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb52-1" tabindex="-1"></a><span class="fu">checkresiduals</span>(modelo_arima)</span></code></pre></div>
 <p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 <pre><code>## 
 ##  Ljung-Box test
@@ -369,14 +377,14 @@ Se observan valores homegéneos en los meses y no se observan valores atípicos 
 ## Q* = 63.564, df = 19, p-value = 1.043e-06
 ## 
 ## Model df: 5.   Total lags used: 24</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb55-1" tabindex="-1"></a><span class="fu">shapiro.test</span>(residuales)</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb54-1" tabindex="-1"></a><span class="fu">shapiro.test</span>(residuales)</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  residuales
 ## W = 0.91174, p-value &lt; 2.2e-16</code></pre>
-<p>El valor de 0.91154 sugiere que los residuales están algo alejados de seguir una distribución normal, lo cual se confirma con el p-value bajo.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb57-1" tabindex="-1"></a><span class="fu">Box.test</span>(residuales,<span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>)</span></code></pre></div>
+<p>El valor de 0.91174 sugiere que los residuales están algo alejados de seguir una distribución normal, lo cual se confirma con el p-value bajo.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb56-1" tabindex="-1"></a><span class="fu">Box.test</span>(residuales,<span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Box-Ljung test
 ## 
@@ -392,8 +400,8 @@ Se observan valores homegéneos en los meses y no se observan valores atípicos 
           </div>
         </div>
       </div>
-<a href="modelo-holt-winters-y-suavizamiento-exponencial.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="modelo-holt-winters-y-suavizamiento-exponencial.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="algoritmo-facebook-prophet.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

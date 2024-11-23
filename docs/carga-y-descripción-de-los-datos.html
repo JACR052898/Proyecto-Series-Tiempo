@@ -58,6 +58,14 @@
 <script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="libs/dygraphs-1.1.1/shapes.js"></script>
+<script src="libs/moment-2.8.4/moment.js"></script>
+<script src="libs/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="libs/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="libs/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<script src="libs/Dygraph.Plugins.Unzoom-1.0/unzoom.js"></script>
 
 
 <style type="text/css">
@@ -146,7 +154,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Series-de-tiempo</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="serie-de-tiempo.html"><a href="serie-de-tiempo.html"><i class="fa fa-check"></i><b>1</b> SERIE DE TIEMPO</a>
+<li class="chapter" data-level="1" data-path="serie-de-tiempo.html"><a href="serie-de-tiempo.html"><i class="fa fa-check"></i><b>1</b> <strong>SERIE DE TIEMPO</strong></a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="serie-de-tiempo.html"><a href="serie-de-tiempo.html#referencia"><i class="fa fa-check"></i><b>1.1</b> <strong>Referencia</strong></a></li>
 <li class="chapter" data-level="1.2" data-path="serie-de-tiempo.html"><a href="serie-de-tiempo.html#herramientas-utilizadas"><i class="fa fa-check"></i><b>1.2</b> <strong>Herramientas utilizadas</strong></a></li>
@@ -188,6 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2.3" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#resultados"><i class="fa fa-check"></i><b>6.2.3</b> Resultados</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="algoritmo-facebook-prophet.html"><a href="algoritmo-facebook-prophet.html"><i class="fa fa-check"></i><b>7</b> <strong>ALGORITMO FACEBOOK PROPHET</strong></a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -220,17 +229,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-4"><a href="carga-y-descripción-de-los-datos.html#cb2-4" tabindex="-1"></a><span class="fu">library</span>(zoo)</span>
 <span id="cb2-5"><a href="carga-y-descripción-de-los-datos.html#cb2-5" tabindex="-1"></a><span class="fu">library</span>(grid)</span>
 <span id="cb2-6"><a href="carga-y-descripción-de-los-datos.html#cb2-6" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
-<span id="cb2-7"><a href="carga-y-descripción-de-los-datos.html#cb2-7" tabindex="-1"></a><span class="fu">library</span>(TSA)</span></code></pre></div>
+<span id="cb2-7"><a href="carga-y-descripción-de-los-datos.html#cb2-7" tabindex="-1"></a><span class="fu">library</span>(TSA)</span>
+<span id="cb2-8"><a href="carga-y-descripción-de-los-datos.html#cb2-8" tabindex="-1"></a><span class="fu">library</span>(tseries)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="carga-y-descripción-de-los-datos.html#cb3-1" tabindex="-1"></a><span class="fu">glimpse</span>(data)</span></code></pre></div>
 <pre><code>## Rows: 999
 ## Columns: 7
-## $ Mes        &lt;chr&gt; &quot;7/1/1955&quot;, &quot;8/1/1955&quot;, &quot;9/1/1955&quot;, &quot;10/1/1955&quot;, &quot;11/1/1955&quot;, &quot;12/1/1955&quot;, &quot;1/1/1956&quot;, &quot;2/1/…
-## $ IPC        &lt;chr&gt; &quot;-0.87%&quot;, &quot;-0.01%&quot;, &quot;0.84%&quot;, &quot;0.77%&quot;, &quot;1.44%&quot;, &quot;2.03%&quot;, &quot;2.10%&quot;, &quot;2.57%&quot;, &quot;3.10%&quot;, &quot;3.04%&quot;, …
-## $ DTF        &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
-## $ usura.E.A. &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
-## $ usura.M.V. &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
-## $ usura.DTF  &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
-## $ usura.IPC  &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …</code></pre>
+## $ Mes        &lt;chr&gt; &quot;7/1/1955&quot;, &quot;8/1/1955&quot;, &quot;9/1/1955&quot;, &quot;10/1/1955&quot;, &quot;11/1/1955&quot;, &quot;12/1/1955&quot;, &quot;1/1/1956&quot;, &quot;2/1/1956&quot;, &quot;3/1/1956&quot;, &quot;4/1/1956&quot;, &quot;5/1/1956&quot;, &quot;6/1/1956&quot;, &quot;7/1/…
+## $ IPC        &lt;chr&gt; &quot;-0.87%&quot;, &quot;-0.01%&quot;, &quot;0.84%&quot;, &quot;0.77%&quot;, &quot;1.44%&quot;, &quot;2.03%&quot;, &quot;2.10%&quot;, &quot;2.57%&quot;, &quot;3.10%&quot;, &quot;3.04%&quot;, &quot;4.25%&quot;, &quot;5.28%&quot;, &quot;6.36%&quot;, &quot;5.76%&quot;, &quot;7.26%&quot;, &quot;8.31%&quot;, &quot;8.83%…
+## $ DTF        &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
+## $ usura.E.A. &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
+## $ usura.M.V. &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
+## $ usura.DTF  &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
+## $ usura.IPC  &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …</code></pre>
 </div>
 <div id="descripción-de-la-base-de-datos" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> <strong>Descripción de la base de datos</strong><a href="carga-y-descripción-de-los-datos.html#descripción-de-la-base-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>

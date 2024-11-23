@@ -15,7 +15,8 @@ rmd_files: [
   "docs/02-capitulo-2.Rmd",
   "docs/03-capitulo-3.Rmd",
   "docs/04-capitulo-4.Rmd",
-  "docs/05-capitulo-5.Rmd"
+  "docs/05-capitulo-5.Rmd",
+  "docs/06-capitulo-6.Rmd"
   # Agrega más capítulos aquí
 ]
 
