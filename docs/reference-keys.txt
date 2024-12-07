@@ -23,3 +23,8 @@ test-de-residuos-afc-y-pacf
 pronóstico
 resultados
 algoritmo-facebook-prophet
+redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan
+modelo-elman
+modelo-jordan
+rendimiento-elman
+rendimiento-jordan
