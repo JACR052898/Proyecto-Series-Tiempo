@@ -66,6 +66,11 @@
 <script src="libs/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
 <script src="libs/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
 <script src="libs/Dygraph.Plugins.Unzoom-1.0/unzoom.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.33/datatables.js"></script>
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
 
 
 <style type="text/css">
@@ -196,7 +201,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2.3" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#resultados"><i class="fa fa-check"></i><b>6.2.3</b> Resultados</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="algoritmo-facebook-prophet.html"><a href="algoritmo-facebook-prophet.html"><i class="fa fa-check"></i><b>7</b> <strong>ALGORITMO FACEBOOK PROPHET</strong></a></li>
+<li class="chapter" data-level="7" data-path="algoritmo-facebook-prophet.html"><a href="algoritmo-facebook-prophet.html"><i class="fa fa-check"></i><b>7</b> <strong>ALGORITMO FACEBOOK PROPHET</strong></a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="algoritmo-facebook-prophet.html"><a href="algoritmo-facebook-prophet.html#algoritmo-facebook-prophet-1"><i class="fa fa-check"></i><b>7.1</b> **ALGORITMO FACEBOOK PROPHET</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html"><a href="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html"><i class="fa fa-check"></i><b>8</b> <strong>REDES NEURONALES RECURRENTES PARA SERIES DE TIEMPO MEDIANTE ELMAN Y JORDAN</strong></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html"><a href="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html#modelo-elman"><i class="fa fa-check"></i><b>8.1</b> <strong>Modelo ELMAN</strong></a></li>
+<li class="chapter" data-level="8.2" data-path="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html"><a href="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html#modelo-jordan"><i class="fa fa-check"></i><b>8.2</b> <strong>Modelo JORDAN</strong></a></li>
+<li class="chapter" data-level="8.3" data-path="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html"><a href="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html#rendimiento-elman"><i class="fa fa-check"></i><b>8.3</b> <strong>Rendimiento ELMAN</strong></a></li>
+<li class="chapter" data-level="8.4" data-path="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html"><a href="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html#rendimiento-jordan"><i class="fa fa-check"></i><b>8.4</b> <strong>Rendimiento JORDAN</strong></a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -234,13 +249,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="carga-y-descripción-de-los-datos.html#cb3-1" tabindex="-1"></a><span class="fu">glimpse</span>(data)</span></code></pre></div>
 <pre><code>## Rows: 999
 ## Columns: 7
-## $ Mes        &lt;chr&gt; &quot;7/1/1955&quot;, &quot;8/1/1955&quot;, &quot;9/1/1955&quot;, &quot;10/1/1955&quot;, &quot;11/1/1955&quot;, &quot;12/1/1955&quot;, &quot;1/1/1956&quot;, &quot;2/1/…
-## $ IPC        &lt;chr&gt; &quot;-0.87%&quot;, &quot;-0.01%&quot;, &quot;0.84%&quot;, &quot;0.77%&quot;, &quot;1.44%&quot;, &quot;2.03%&quot;, &quot;2.10%&quot;, &quot;2.57%&quot;, &quot;3.10%&quot;, &quot;3.04%&quot;, …
-## $ DTF        &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
-## $ usura.E.A. &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
-## $ usura.M.V. &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
-## $ usura.DTF  &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
-## $ usura.IPC  &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …</code></pre>
+## $ Mes        [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;7/1/1955&quot;, &quot;8/1/1955&quot;, &quot;9/1/1955&quot;, &quot;10/1/1955&quot;, &quot;11/1/1955&quot;, &quot;12/1/1955&quot;, &quot;1/1/1956&quot;, &quot;2/1/…
+## $ IPC        [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;-0.87%&quot;, &quot;-0.01%&quot;, &quot;0.84%&quot;, &quot;0.77%&quot;, &quot;1.44%&quot;, &quot;2.03%&quot;, &quot;2.10%&quot;, &quot;2.57%&quot;, &quot;3.10%&quot;, &quot;3.04%&quot;, …
+## $ DTF        [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
+## $ usura.E.A. [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
+## $ usura.M.V. [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
+## $ usura.DTF  [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …
+## $ usura.IPC  [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, …</code></pre>
 </div>
 <div id="descripción-de-la-base-de-datos" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> <strong>Descripción de la base de datos</strong><a href="carga-y-descripción-de-los-datos.html#descripción-de-la-base-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>

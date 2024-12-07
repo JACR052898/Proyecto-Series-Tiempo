@@ -17,8 +17,8 @@ rmd_files: [
   "docs/04-capitulo-4.Rmd",
   "docs/05-capitulo-5.Rmd",
   "docs/06-capitulo-6.Rmd",
-  "docs/07-capitulo-7.Rmd"
-  # Agrega más capítulos aquí
+  "docs/07-capitulo-7.Rmd",
+  "docs/08-capitulo-8.Rmd"
 ]
 
 output:

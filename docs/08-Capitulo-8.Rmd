@@ -1,0 +1,235 @@
+# **REDES NEURONALES RECURRENTES PARA SERIES DE TIEMPO MEDIANTE ELMAN Y JORDAN**
+
+## **Modelo ELMAN**
+
+```{r}
+library(RSNNS)
+```
+
+
+```{r}
+# normalizacion de los datos en formato serie de tiempo
+Z<-as.ts(Indice_ts,F)
+S <- (Z-min(Z))/(max(Z)-min(Z))  
+plot(S, main="Serie de tiempo IPC datos normalizados",xlab="Tiempo",ylab="Z")
+```
+
+```{r}
+#Comprobamos el numero de filas totales que contiene nuestro dataset.
+tamano_total<-length(S)
+```
+
+
+```{r}
+#definicion set de entrenamiento
+tamano_train <- round(tamano_total*0.75, digits = 0)
+train <- 0:(tamano_train-1)
+train
+```
+
+```{r}
+#definicion set de prueba
+test <- (tamano_train):tamano_total
+test
+```
+```{r}
+#Ahora crearemos un dataframe con n columnas, cada una de las cuales adelantara 
+#un valor de la serie en el futuro, a través de una variable tipo zoo, equivalente al #periodo de retardo de la serie.
+library(zoo)
+library(quantmod)
+y <- as.zoo(S)
+x1 <- Lag(y, k = 1)
+x2 <- Lag(y, k = 2)
+x3 <- Lag(y, k = 3)
+x4 <- Lag(y, k = 4)
+x5 <- Lag(y, k = 5)
+x6 <- Lag(y, k = 6)
+x7 <- Lag(y, k = 7)
+x8 <- Lag(y, k = 8)
+x9 <- Lag(y, k = 9)
+x10 <- Lag(y, k = 10)
+x11 <- Lag(y, k = 11)
+x12 <- Lag(y, k = 12)
+slogN <- cbind(y,x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12)
+```
+
+```{r}
+DT::datatable(slogN)
+```
+
+```{r}
+#A continuacion eliminaremos los valores NA producidos al desplazar la serie:
+slogN1 <- slogN[-(1:12),]
+DT::datatable(slogN1)
+```
+```{r}
+#Luego definimos los valores de entrada y salida de la red neuronal:
+inputs <- slogN1[,2:13]
+outputs <- slogN1[,1]
+```
+
+```{r}
+library(RSNNS)
+
+# Se fija una semilla y se entrena el modelo con el set de entrenamiento, para este caso se utilizaran 5 neuronas.
+
+set.seed(42)
+
+fit1<-elman(inputs[train],
+           outputs[train],
+           size=5,
+           learnFuncParams=c(0.1),
+           maxit=10000)
+```
+
+```{r}
+#En la gráfica siguiente vemos como evoluciona el error de la red con el numero de iteraciones para los parámetros expuestos.
+
+plotIterativeError(fit1, main = "Error iterativo para 5 neuronas")
+```
+
+```{r}
+# se elimina el conjunto de test de las entradas y salidas de las neuronas para realizar el ajuste del modelo a los datos reales
+y1 <- as.vector(outputs[-test])
+predtrain1 <- predict(fit1, inputs[-test])
+```
+
+```{r}
+y1<-y1*(max(Z)-min(Z))+min(Z)
+predtrain1<-predtrain1*(max(Z)-min(Z))+min(Z)
+```
+
+```{r}
+pt1 <- plot_ly(x = 1:length(y1), y = y1, type = 'scatter', mode = 'lines',
+             line = list(color = 'black'), name = 'Datos reales') %>%
+     add_lines(x = 1:length(predtrain1), y = predtrain1, 
+               line = list(color = 'red'), name = 'Predicciones') %>%
+     layout(title = "Ajuste de las predicciones modelo ELMAN en datos de entrenamiento",
+            xaxis = list(title = "Observación"),
+            yaxis = list(title = "IPC normalizado"))
+
+pt1
+```
+
+
+
+```{r}
+# se elimina el conjunto de test de las entradas y salidas de las neuronas para realizar el ajuste del modelo a los datos reales
+y2 <- as.vector(outputs[-train])
+predtest1 <- predict(fit1, inputs[-train])
+```
+
+```{r}
+y2<-y2*(max(Z)-min(Z))+min(Z)
+predtest1<-predtest1*(max(Z)-min(Z))+min(Z)
+```
+
+```{r}
+pt2 <- plot_ly(x = 1:length(y2), y = y2, type = 'scatter', mode = 'lines',
+             line = list(color = 'black'), name = 'Datos reales') %>%
+     add_lines(x = 1:length(predtest1), y = predtest1, 
+               line = list(color = 'red'), name = 'Predicciones') %>%
+     layout(title = "Ajuste de las predicciones modelo ELMAN en datos de prueba",
+            xaxis = list(title = "Observación"),
+            yaxis = list(title = "IPC normalizado"))
+
+pt2
+```
+
+
+## **Modelo JORDAN**
+
+```{r}
+set.seed(42)
+fit2 <-jordan(inputs[train],
+              outputs[train],
+              size=5,
+              learnFuncParams=c(0.1),
+              maxit=35000)
+```
+
+```{r}
+plotIterativeError(fit2, main = "Error iterativo para 5 neuronas")
+```
+
+
+```{r}
+# se elimina el conjunto de test de las entradas y salidas de las neuronas para realizar el ajuste del modelo a los datos reales
+y3 <- as.vector(outputs[-test])
+predtrain2 <- predict(fit2, inputs[-test])
+```
+
+```{r}
+y3<-y3*(max(Z)-min(Z))+min(Z)
+predtrain2<-predtrain2*(max(Z)-min(Z))+min(Z)
+```
+
+```{r}
+pt3 <- plot_ly(x = 1:length(y3), y = y3, type = 'scatter', mode = 'lines',
+             line = list(color = 'black'), name = 'Datos reales') %>%
+     add_lines(x = 1:length(predtrain2), y = predtrain2, 
+               line = list(color = 'red'), name = 'Predicciones') %>%
+     layout(title = "Ajuste de las predicciones modelo JORDAN en datos de entrenamiento",
+            xaxis = list(title = "Observación"),
+            yaxis = list(title = "IPC normalizado"))
+
+pt3
+```
+
+```{r}
+# se elimina el conjunto de test de las entradas y salidas de las neuronas para realizar el ajuste del modelo a los datos reales
+y4 <- as.vector(outputs[-train])
+predtest2 <- predict(fit2, inputs[-train])
+```
+
+```{r}
+y4<-y4*(max(Z)-min(Z))+min(Z)
+predtest2<-predtest2*(max(Z)-min(Z))+min(Z)
+```
+
+```{r}
+pt4 <- plot_ly(x = 1:length(y4), y = y4, type = 'scatter', mode = 'lines',
+             line = list(color = 'black'), name = 'Datos reales') %>%
+     add_lines(x = 1:length(predtest2), y = predtest2, 
+               line = list(color = 'red'), name = 'Predicciones') %>%
+     layout(title = "Ajuste de las predicciones modelo JORDAN en datos de prueba",
+            xaxis = list(title = "Observación"),
+            yaxis = list(title = "IPC"))
+
+pt4
+```
+
+## **Rendimiento ELMAN**
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#convertir los datos en serie de tiempo
+data_real_ELMAN <- ts(y2, start = c(2008,4), frequency = 12)
+print(data_real_ELMAN) # imprimir datos
+```
+```{r}
+m1pt<-ts(predtest1,start = c(2008,04), frequency = 12)
+print(m1pt)
+```
+
+## **Rendimiento JORDAN**
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#convertir los datos en serie de tiempo
+data_real_JORDAN <- ts(y4, start = c(2008,4), frequency = 12)
+print(data_real_JORDAN) # imprimir datos
+```
+```{r}
+m2pt<-ts(predtest2,start = c(2008,04), frequency = 12)
+print(m1pt)
+```
+
+
+```{r}
+accuracy(m1pt,data_real_ELMAN)
+```
+
+```{r}
+accuracy(m2pt,data_real_JORDAN)
+```
