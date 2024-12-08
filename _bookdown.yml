@@ -17,8 +17,7 @@ rmd_files: [
   "04-capitulo-4.Rmd",
   "05-capitulo-5.Rmd",
   "06-capitulo-6.Rmd",
-  #"07-capitulo-7.Rmd",
-  "08-capitulo-8.Rmd",
+  "07-capitulo-7.Rmd"
 ]
 
 output:

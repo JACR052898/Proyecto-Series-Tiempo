@@ -1,49 +1,297 @@
-# **ALGORITMO FACEBOOK PROPHET**
+# **REDES NEURONALES RECURRENTES PARA SERIES DE TIEMPO MEDIANTE ELMAN Y JORDAN**
+
+## **Modelo ELMAN**
 
 ```{r}
-library (prophet) # llamado de la libreria facebook.
+library(RSNNS)
 ```
 
 
 ```{r}
-# Ajuste inicial de los datos para entramiento del modelo
-dataprophet<-data[,-c(3,4)]
-colnames(dataprophet)<- c("ds","y") # se deben nombrar las columnas de esta forma.
+# normalizacion de los datos en formato serie de tiempo
+Z<-as.ts(Indice_ts,F)
+S <- (Z-min(Z))/(max(Z)-min(Z))  
+plot(S, main="Serie de tiempo IPC datos normalizados",xlab="Tiempo",ylab="Z")
+```
+
+```{r}
+#Comprobamos el numero de filas totales que contiene nuestro dataset.
+tamano_total<-length(S)
 ```
 
 
 ```{r}
-# Limpieza ultimas 3 fechas
-dataprophet[c("828","829","830"),"ds"]<-c("2024-06-01","2024-07-01","2024-08-01")
+#definicion set de entrenamiento
+tamano_train <- round(tamano_total*0.75, digits = 0)
+train <- 0:(tamano_train-1)
+train
+```
+
+```{r}
+#definicion set de prueba
+test <- (tamano_train):tamano_total
+test
+```
+```{r}
+#Ahora crearemos un dataframe con n columnas, cada una de las cuales adelantara 
+#un valor de la serie en el futuro, a través de una variable tipo zoo, equivalente al #periodo de retardo de la serie.
+library(zoo)
+library(quantmod)
+y <- as.zoo(S)
+x1 <- Lag(y, k = 1)
+x2 <- Lag(y, k = 2)
+x3 <- Lag(y, k = 3)
+x4 <- Lag(y, k = 4)
+x5 <- Lag(y, k = 5)
+x6 <- Lag(y, k = 6)
+x7 <- Lag(y, k = 7)
+x8 <- Lag(y, k = 8)
+x9 <- Lag(y, k = 9)
+x10 <- Lag(y, k = 10)
+x11 <- Lag(y, k = 11)
+x12 <- Lag(y, k = 12)
+slogN <- cbind(y,x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12)
+```
+
+```{r}
+DT::datatable(slogN)
+```
+
+```{r}
+#A continuacion eliminaremos los valores NA producidos al desplazar la serie:
+slogN1 <- slogN[-(1:12),]
+DT::datatable(slogN1)
+```
+```{r}
+#Luego definimos los valores de entrada y salida de la red neuronal:
+inputs <- slogN1[,2:13]
+outputs <- slogN1[,1]
+```
+
+```{r}
+library(RSNNS)
+
+# Se fija una semilla y se entrena el modelo con el set de entrenamiento, para este caso se utilizaran 5 neuronas.
+
+set.seed(42)
+
+fit1<-elman(inputs[train],
+           outputs[train],
+           size=5,
+           learnFuncParams=c(0.1),
+           maxit=10000)
+```
+
+```{r}
+#En la gráfica siguiente vemos como evoluciona el error de la red con el numero de iteraciones para los parámetros expuestos.
+
+plotIterativeError(fit1, main = "Error iterativo para 5 neuronas")
+```
+En la gráfica anterior el error converge a cero, por lo que se espera un ajuste rápido del modelo. Esto indica que el modelo ha logrado aprender una representación correcta de los datos.
+
+
+```{r}
+# se elimina el conjunto de test de las entradas y salidas de las neuronas para realizar el ajuste del modelo a los datos reales
+y1 <- as.vector(outputs[-test])
+predtrain1 <- predict(fit1, inputs[-test])
+```
+
+```{r}
+y1<-y1*(max(Z)-min(Z))+min(Z)
+predtrain1<-predtrain1*(max(Z)-min(Z))+min(Z)
+```
+
+```{r}
+pt1 <- plot_ly(x = 1:length(y1), y = y1, type = 'scatter', mode = 'lines',
+             line = list(color = 'black'), name = 'Datos reales') %>%
+     add_lines(x = 1:length(predtrain1), y = predtrain1, 
+               line = list(color = 'red'), name = 'Predicciones') %>%
+     layout(title = "Ajuste de las predicciones modelo ELMAN en datos de entrenamiento",
+            xaxis = list(title = "Observación"),
+            yaxis = list(title = "IPC normalizado"))
+
+pt1
+```
+
+Se comparan los datos predichos contra los datos originales en el conjunto de entrenamiento y se aproximans bastante. Se procede entonces a realizar la comparación de los datos con el conjunto de prueba:
+
+```{r}
+# se elimina el conjunto de test de las entradas y salidas de las neuronas para realizar el ajuste del modelo a los datos reales
+y2 <- as.vector(outputs[-train])
+predtest1 <- predict(fit1, inputs[-train])
+```
+
+```{r}
+y2<-y2*(max(Z)-min(Z))+min(Z)
+predtest1<-predtest1*(max(Z)-min(Z))+min(Z)
+```
+
+```{r}
+pt2 <- plot_ly(x = 1:length(y2), y = y2, type = 'scatter', mode = 'lines',
+             line = list(color = 'black'), name = 'Datos reales') %>%
+     add_lines(x = 1:length(predtest1), y = predtest1, 
+               line = list(color = 'red'), name = 'Predicciones') %>%
+     layout(title = "Ajuste de las predicciones modelo ELMAN en datos de prueba",
+            xaxis = list(title = "Observación"),
+            yaxis = list(title = "IPC normalizado"))
+
+pt2
+```
+
+Gráfica del conjunto de prueba original vs los valores predichos por el modelo ELMAN.
+
+
+## **Modelo JORDAN**
+
+```{r}
+set.seed(42)
+fit2 <-jordan(inputs[train],
+              outputs[train],
+              size=5,
+              learnFuncParams=c(0.1),
+              maxit=35000)
+```
+
+```{r}
+plotIterativeError(fit2, main = "Error iterativo para 5 neuronas")
+```
+De igual manera que con el modelo ELMAN, el error en el modelo JORDAN converge a cero, por lo que se espera un ajuste rápido del modelo. Esto indica que el modelo ha logrado aprender una representación correcta de los datos.
+
+
+```{r}
+# se elimina el conjunto de test de las entradas y salidas de las neuronas para realizar el ajuste del modelo a los datos reales
+y3 <- as.vector(outputs[-test])
+predtrain2 <- predict(fit2, inputs[-test])
+```
+
+```{r}
+y3<-y3*(max(Z)-min(Z))+min(Z)
+predtrain2<-predtrain2*(max(Z)-min(Z))+min(Z)
+```
+
+```{r}
+pt3 <- plot_ly(x = 1:length(y3), y = y3, type = 'scatter', mode = 'lines',
+             line = list(color = 'black'), name = 'Datos reales') %>%
+     add_lines(x = 1:length(predtrain2), y = predtrain2, 
+               line = list(color = 'red'), name = 'Predicciones') %>%
+     layout(title = "Ajuste de las predicciones modelo JORDAN en datos de entrenamiento",
+            xaxis = list(title = "Observación"),
+            yaxis = list(title = "IPC normalizado"))
+
+pt3
+```
+
+```{r}
+# se elimina el conjunto de test de las entradas y salidas de las neuronas para realizar el ajuste del modelo a los datos reales
+y4 <- as.vector(outputs[-train])
+predtest2 <- predict(fit2, inputs[-train])
+```
+
+```{r}
+y4<-y4*(max(Z)-min(Z))+min(Z)
+predtest2<-predtest2*(max(Z)-min(Z))+min(Z)
+```
+
+```{r}
+pt4 <- plot_ly(x = 1:length(y4), y = y4, type = 'scatter', mode = 'lines',
+             line = list(color = 'black'), name = 'Datos reales') %>%
+     add_lines(x = 1:length(predtest2), y = predtest2, 
+               line = list(color = 'red'), name = 'Predicciones') %>%
+     layout(title = "Ajuste de las predicciones modelo JORDAN en datos de prueba",
+            xaxis = list(title = "Observación"),
+            yaxis = list(title = "IPC"))
+
+pt4
+```
+
+Gráfica del conjunto de prueba original vs los valores predichos por el modelo JORDAN. Visualmente parece predecir mejor que el modelo ELMAN, sin embargo, se verificará con las métricas.
+
+
+## **Rendimiento ELMAN**
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#convertir los datos en serie de tiempo
+data_real_ELMAN <- ts(y2, start = c(2008,4), frequency = 12)
+print(data_real_ELMAN) # imprimir datos
+```
+```{r}
+m1pt<-ts(predtest1,start = c(2008,04), frequency = 12)
+print(m1pt)
+```
+
+## **Rendimiento JORDAN**
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#convertir los datos en serie de tiempo
+data_real_JORDAN <- ts(y4, start = c(2008,4), frequency = 12)
+print(data_real_JORDAN) # imprimir datos
+```
+```{r}
+m2pt<-ts(predtest2,start = c(2008,04), frequency = 12)
+print(m1pt)
 ```
 
 
 ```{r}
-# Entrenamiento del modelo Facebook Prophet
-mprophet<- prophet(dataprophet)
-# Creacion de las fechas futuras para la prediccion
-future <- make_future_dataframe(mprophet,periods = 12 ,freq = 'month')
-tail(future)
+accuracy(m1pt,data_real_ELMAN)
 ```
 
 ```{r}
-# Prediccion mediante modelo Facebook
-pprophet<-predict(mprophet,future)
-pprophet$ds<-as.Date(pprophet$ds)
-dyplot.prophet(mprophet, pprophet)
+accuracy(m2pt,data_real_JORDAN)
 ```
 
-La gráfica muestra en negro los datos originales, en azul la predicción con el modelo prophet y la sombra azul el intervalo de confianza del 95%. Se puede observar que el modelo prophet se ajusta a la tendencia del IPC. Sin embargo, su ajuste es conservador, comportándose en los picos de la serie como un valor estable y central. Adicionalmente, se observan varios puntos de la serie original por fuera de los intervalos de confianza, lo que sugiere que una inferencia con bastante incertidumbre sobre la predicción.
+## **Comparación de métricas**
 
-```{r}
-prophet_plot_components(mprophet,pprophet)
-```
 
-Gráfico superior (“trend”):
+ME (Mean Error):
+ELMAN: -0.001919747
+JORDAN: -0.001702802
+→ El modelo JORDAN tiene un error medio más bajo, lo que sugiere que sus predicciones están, en promedio, más cerca de los valores reales.
 
-Representa la tendencia general de la serie de tiempo (trend) a lo largo de los años (ds). Se observa un aumento progresivo desde aproximadamente 1960 hasta alcanzar un máximo cerca del año 2000. Después del año 2000, la tendencia muestra una disminución notable, seguida de un leve repunte hacia el 2020.
 
-Gráfico inferior (“yearly”):
+*RMSE (Root Mean Square Error):*
 
-Representa el patrón estacional anual (yearly), mostrando cómo varían los valores de la serie a lo largo de un año típico. El eje horizontal está etiquetado como “Day of year”, indicando días específicos dentro del año. Se pueden observar picos y valles recurrentes, lo que sugiere estacionalidad marcada en ciertos períodos del año, como un aumento significativo cerca de enero y abril, seguido de descensos en otras épocas.
+ELMAN: 0.005765629
+JORDAN: 0.005252132
+JORDAN tiene un RMSE menor, indicando menor variación entre predicciones y valores reales.
+
+
+*MAE (Mean Absolute Error):*
+
+ELMAN: 0.005023244
+JORDAN: 0.004500312
+JORDAN muestra un menor error absoluto medio.
+
+
+*MPE (Mean Percentage Error):*
+
+ELMAN: -10.67072
+JORDAN: -9.467167
+JORDAN tiene menor porcentaje de error promedio.
+
+
+*MAPE (Mean Absolute Percentage Error):*
+
+ELMAN: 14.51809
+JORDAN: 12.86795
+JORDAN tiene un menor porcentaje absoluto de error promedio.
+
+*ACF1 (Autocorrelation of Residuals at Lag 1):*
+
+ELMAN: 0.7952796
+JORDAN: 0.6783398
+JORDAN muestra menor autocorrelación en los residuos, indicando que los errores están menos correlacionados y probablemente son más independientes.
+
+
+*Theil's U:*
+
+ELMAN: 1.950453
+JORDAN: 1.748526
+JORDAN tiene un valor más bajo de Theil's U, lo que sugiere mejor capacidad predictiva relativa.
+
+
+*Conclusión*
+El modelo JORDAN es superior al modelo ELMAN en todas las métricas analizadas, mostrando menor error y mejor ajuste a los datos reales. Por lo tanto, JORDAN arroja mejores resultados.
 
