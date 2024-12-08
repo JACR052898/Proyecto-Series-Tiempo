@@ -193,8 +193,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><i class="fa fa-check"></i><b>6</b> <strong>VARIABLES EN EL TIEMPO, AJUSTE A MODELO LINEAL Y ESTACIONARIO</strong></a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#modelo-lineal"><i class="fa fa-check"></i><b>6.1</b> Modelo lineal</a></li>
-<li class="chapter" data-level="6.2" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#modelo-arima"><i class="fa fa-check"></i><b>6.2</b> Modelo ARIMA</a>
+<li class="chapter" data-level="6.1" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#modelo-lineal"><i class="fa fa-check"></i><b>6.1</b> <strong>Modelo lineal</strong></a></li>
+<li class="chapter" data-level="6.2" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#modelo-arima"><i class="fa fa-check"></i><b>6.2</b> <strong>Modelo ARIMA</strong></a>
 <ul>
 <li class="chapter" data-level="6.2.1" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#test-de-residuos-afc-y-pacf"><i class="fa fa-check"></i><b>6.2.1</b> Test de residuos, AFC y PACF</a></li>
 <li class="chapter" data-level="6.2.2" data-path="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#pronóstico"><i class="fa fa-check"></i><b>6.2.2</b> Pronóstico</a></li>
@@ -208,7 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2" data-path="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html"><a href="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html#modelo-jordan"><i class="fa fa-check"></i><b>8.2</b> <strong>Modelo JORDAN</strong></a></li>
 <li class="chapter" data-level="8.3" data-path="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html"><a href="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html#rendimiento-elman"><i class="fa fa-check"></i><b>8.3</b> <strong>Rendimiento ELMAN</strong></a></li>
 <li class="chapter" data-level="8.4" data-path="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html"><a href="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html#rendimiento-jordan"><i class="fa fa-check"></i><b>8.4</b> <strong>Rendimiento JORDAN</strong></a></li>
-<li class="chapter" data-level="8.5" data-path="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html"><a href="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html#métricas-comparadas"><i class="fa fa-check"></i><b>8.5</b> Métricas Comparadas</a></li>
+<li class="chapter" data-level="8.5" data-path="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html"><a href="redes-neuronales-recurrentes-para-series-de-tiempo-mediante-elman-y-jordan.html#comparación-de-métricas"><i class="fa fa-check"></i><b>8.5</b> <strong>Comparación de métricas</strong></a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -233,7 +233,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario" class="section level1 hasAnchor" number="6">
 <h1><span class="header-section-number">Capítulo 6</span> <strong>VARIABLES EN EL TIEMPO, AJUSTE A MODELO LINEAL Y ESTACIONARIO</strong><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="modelo-lineal" class="section level2 hasAnchor" number="6.1">
-<h2><span class="header-section-number">6.1</span> Modelo lineal<a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#modelo-lineal" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">6.1</span> <strong>Modelo lineal</strong><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#modelo-lineal" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb33-1" tabindex="-1"></a><span class="fu">plot</span>(Indice_ts, <span class="at">main=</span><span class="st">&quot;Índice en el tiempo&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Tiempo&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Índice&quot;</span>)</span>
 <span id="cb33-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb33-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">reg =</span> <span class="fu">lm</span>(Indice_ts <span class="sc">~</span> <span class="fu">time</span>(Indice_ts)))</span></code></pre></div>
 <p><img src="Proyecto-Series-Tiempo_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
@@ -316,7 +316,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Se observan valores homegéneos en los meses y no se observan valores atípicos marcados.</p>
 </div>
 <div id="modelo-arima" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> Modelo ARIMA<a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#modelo-arima" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">6.2</span> <strong>Modelo ARIMA</strong><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#modelo-arima" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb38-1" tabindex="-1"></a><span class="fu">library</span>(uroot)</span>
 <span id="cb38-2"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb38-2" tabindex="-1"></a>ocb_test <span class="ot">&lt;-</span> <span class="fu">ocsb.test</span>(Indice_ts)</span>
 <span id="cb38-3"><a href="variables-en-el-tiempo-ajuste-a-modelo-lineal-y-estacionario.html#cb38-3" tabindex="-1"></a><span class="fu">print</span>(ocb_test)</span></code></pre></div>

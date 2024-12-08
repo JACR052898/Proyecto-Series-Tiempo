@@ -28,4 +28,4 @@ modelo-elman
 modelo-jordan
 rendimiento-elman
 rendimiento-jordan
-métricas-comparadas
+comparación-de-métricas
