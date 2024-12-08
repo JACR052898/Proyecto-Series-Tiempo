@@ -1,7 +1,7 @@
 # **VARIABLES EN EL TIEMPO, AJUSTE A MODELO LINEAL Y ESTACIONARIO**
 
 
-## Modelo lineal
+## **Modelo lineal**
 
 ```{r, warning=FALSE, echo=TRUE}
 plot(Indice_ts, main="Índice en el tiempo", xlab="Tiempo", ylab="Índice")
@@ -25,7 +25,7 @@ Se observan valores homegéneos en los meses y no se observan valores atípicos 
 
 
 
-## Modelo ARIMA
+## **Modelo ARIMA**
 
 ```{r}
 library(uroot)
