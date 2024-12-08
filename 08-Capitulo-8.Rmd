@@ -242,7 +242,7 @@ accuracy(m1pt,data_real_ELMAN)
 accuracy(m2pt,data_real_JORDAN)
 ```
 
-## Métricas Comparadas
+## **Comparación de métricas**
 
 
 ME (Mean Error):
