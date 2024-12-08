@@ -4,7 +4,7 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">Series-de-tiempo</a></li>
+        <li><a href="./">Proyecto-Series-Tiempo</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
     edit: https://github.com/rstudio/Proyecto-Series-Tiempo/edit/master/%s
